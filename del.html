@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إعادة التوجيه</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            text-align: center;
+            direction: rtl;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        h1 {
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .countdown {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background-color: white;
+            color: #2575fc;
+			width:50%;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .link:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="loader"></div>
+        <h1>دليل القبول للعام 2024</h1>
+        <p>الجامعات الحكومية والخاصة<span id="countdown" class="countdown"></p>
+        <a href="https://drive.google.com/file/d/1tQFG_rbXGCYEm9BqS1tKJ3zFDT4MTgZM/edit" class="link" id="redirectLink">دليل القبول العام 2023 حكومية</a>
+		   <a href="https://daleel.admission.gov.sd/ahli_fees/Default.aspx" class="link" id="redirectLink">الرسوم الدراسية للجامعات الخاصة</a>
+		 
+		      <a href="https://daleel.admission.gov.sd/diploma_master/Default.aspx" class="link" id="redirectLink">اسماء الدبلومات التقنية ورسومها</a>
+			     <a href="https://daleel.admission.gov.sd/material_acceptance.htm" class="link" id="redirectLink">المواد المؤهلة للترشيح للقبول</a>
+    </div>
+
+
+</body>
+</html>

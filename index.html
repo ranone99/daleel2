@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة الدفع - admission.gov.sd</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header {
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+        }
+        
+        .btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        .btn .loading-spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .btn.loading .loading-spinner {
+            display: inline-block;
+        }
+        
+        .btn.loading .btn-text {
+            opacity: 0.7;
+        }
+        
+        .btn i {
+            font-size: 20px;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.6);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+        
+        .btn-success:hover {
+            box-shadow: 0 8px 25px rgba(79, 172, 254, 0.6);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            box-shadow: 0 5px 15px rgba(67, 233, 123, 0.4);
+        }
+        
+        .btn-warning:hover {
+            box-shadow: 0 8px 25px rgba(67, 233, 123, 0.6);
+        }
+        
+        .btn-info {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            box-shadow: 0 5px 15px rgba(250, 112, 154, 0.4);
+        }
+        
+        .btn-info:hover {
+            box-shadow: 0 8px 25px rgba(250, 112, 154, 0.6);
+        }
+        
+        .btn-dark {
+            background: linear-gradient(135deg, #434343 0%, #000000 100%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .btn-dark:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+        }
+        
+        .instructions {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            border-right: 4px solid #667eea;
+        }
+        
+        .instructions h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .instructions ul {
+            text-align: right;
+            list-style-position: inside;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .browser-info {
+            background: #e3f2fd;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border-right: 4px solid #2196f3;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        /* شاشة التحميل */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .loading-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .loading-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 300px;
+            width: 90%;
+        }
+        
+        .loading-spinner-large {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        
+        .loading-text {
+            color: #2c3e50;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .loading-subtext {
+            color: #7f8c8d;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .buttons-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- شاشة التحميل -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="loading-spinner-large"></div>
+            <div class="loading-text">جاري التحميل</div>
+            <div class="loading-subtext">يرجى الانتظار...</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h1>بوابة الدفع الإلكتروني</h1>
+            <p class="subtitle">الخدمات الإلكترونية - وزارة التعليم العالي</p>
+        </div>
+        
+        <div class="buttons-grid">
+		 <button class="btn btn-info" onclick="openPaymentPage3(this)">
+                <span class="loading-spinner"></span>
+                <span class="btn-text">
+                    <i class="fas fa-receipt"></i>
+                    الدليل
+                </span>
+            </button>
+            <button class="btn btn-secondary" onclick="openPaymentPage(this)">
+                <span class="loading-spinner"></span>
+                <span class="btn-text">
+                    <i class="fas fa-file-invoice-dollar"></i>
+                    الدفع الإلكتروني والتحقق
+                </span>
+            </button>
+            
+            <button class="btn " onclick="openPaymentPage2(this)">
+                <span class="loading-spinner"></span>
+                <span class="btn-text">
+                    <i class="fas fa-credit-card"></i>
+                    التقديم للشهادة السودانية 2024
+                </span>
+            </button>
+            
+           
+            
+           
+            
+           
+            
+            <button class="btn btn-dark" onclick="openPaymentPage(this)">
+                <span class="loading-spinner"></span>
+                <span class="btn-text">
+                    <i class="fas fa-shield-alt"></i>
+                    شرح طريقة التقديم الصحيحة
+                </span>
+            </button>
+        </div>
+
+        <div class="browser-info">
+            <h3><i class="fas fa-info-circle"></i> معلومات التصفح:</h3>
+            <p>سيتم فتح الصفحة داخل التطبيق باستخدام InAppBrowser</p>
+            <p><small>لإغلاق النافذة: اسحب لأسفل أو اضغط على زر الرجوع</small></p>
+        </div>
+        
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> تعليمات الاستخدام:</h3>
+            <ul>
+                <li>جميع الأزرار تؤدي إلى نفس صفحة الدفع الإلكتروني</li>
+                <li>سيتم فتح الصفحة داخل التطبيق (ليس في متصفح خارجي)</li>
+                <li>تأكد من اتصالك بالإنترنت قبل الضغط على الأزرار</li>
+                <li>احتفظ برقم الإيصال بعد اكتمال العملية</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>© 2024 بوابة القبول الإلكتروني - جميع الحقوق محفوظة</p>
+        </div>
+    </div>
+   <!--الدفع والتحقق-->  <script>
+
+        // دالة لفتح الرابط في InAppBrowser مع تحسين الحجم
+        function openPaymentPage(button) {
+            const url = 'https://admission.gov.sd//Esali/GetInvoiceEsali.aspx?MIM=5&EDD=770692c9d641d9bd6f66cf4f753ff14a&DIM=e4da3b7fbbce2345d7772b0674a318d5&XIX=45&XDX=6c8349cc7260ae62e3b1396831a8398f&stf=11000100&sDtf=658b7cf0231764c31aa7893087479593&ED=11%2f14%2f2025';
+           
+
+            // إظهار شاشة التحميل
+            showLoading();
+            
+            // إضافة تأثير التحميل على الزر
+            if (button) {
+                button.classList.add('loading');
+            }
+            
+            // تأخير بسيط لإظهار شاشة التحميل
+            setTimeout(function() {
+                if (window.cordova && cordova.InAppBrowser) {
+                    // خيارات متقدمة لتحسين الحجم والتجربة
+                    var options = [
+                        'location=yes',
+                        'hardwareback=yes',
+                        'closebuttoncaption=إغلاق',
+                        'toolbarcolor=#667eea',
+                        'navigationbuttoncolor=#ffffff',
+                        'closebuttoncolor=#ffffff',
+                        'toolbartranslucent=no',
+                        'enableViewportScale=yes',
+                        'mediaPlaybackRequiresUserAction=no',
+                        'allowInlineMediaPlayback=no',
+                        'keyboardDisplayRequiresUserAction=no',
+                        'suppressesIncrementalRendering=no',
+                        'presentationstyle=fullscreen',
+                        'transitionstyle=coververtical',
+                        'toolbarposition=top',
+                        'hidenavigationbuttons=no',
+                        'hideurlbar=no',
+                        'disallowoverscroll=no',
+                        'usesWideViewPort=yes',
+                        'fullscreen=yes'
+                    ].join(',');
+                    
+                    // فتح InAppBrowser
+                    var browser = cordova.InAppBrowser.open(url, '_blank', options);
+                    
+                    // إخفاء شاشة التحميل عند فتح المتصفح
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    
+                    // إضافة event listeners للمتصفح
+                    browser.addEventListener('loadstart', function(event) {
+                        console.log('بدأ التحميل: ' + event.url);
+                    });
+                    
+                    browser.addEventListener('loadstop', function(event) {
+                        console.log('انتهى التحميل: ' + event.url);
+                        // يمكن إضافة تعديلات إضافية هنا إذا لزم الأمر
+                    });
+                    
+                    browser.addEventListener('loaderror', function(event) {
+                        console.error('خطأ في التحميل: ' + event.message);
+                        hideLoading();
+                        if (button) {
+                            button.classList.remove('loading');
+                        }
+                        alert('حدث خطأ في تحميل الصفحة. يرجى المحاولة مرة أخرى.');
+                    });
+                    
+                    browser.addEventListener('exit', function(event) {
+                        console.log('تم إغلاق المتصفح');
+                    });
+                    
+                } else if (window.cordova) {
+                    // إذا كان InAppBrowser غير مثبت
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    alert('يجب تثبيت InAppBrowser plugin');
+                    console.error('InAppBrowser plugin not installed');
+                } else {
+                    // للاختبار في المتصفح العادي
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    window.open(url, '_blank');
+                }
+            }, 1000); // تأخير 1 ثانية لإظهار شاشة التحميل
+        }
+        
+        // دالة لإظهار شاشة التحميل
+        function showLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.add('active');
+        }
+        
+        // دالة لإخفاء شاشة التحميل
+        function hideLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('active');
+        }
+        
+        // منع فتح الروابط في المتصفح الخارجي
+        document.addEventListener('deviceready', function() {
+            console.log('Cordova is ready');
+            
+            // التعامل مع الروابط الخارجية
+            document.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' && e.target.href && 
+                    e.target.href.startsWith('http')) {
+                    e.preventDefault();
+                    openPaymentPage(null);
+                }
+            });
+        }, false);
+        
+        // إضافة تأثيرات تفاعلية إضافية
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // إضافة تأثير النقر
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        if (!this.classList.contains('loading')) {
+                            this.style.transform = '';
+                        }
+                    }, 150);
+                });
+            });
+            
+            // إخفاء شاشة التحميل عند الضغط على ESC (للتطوير)
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    hideLoading();
+                    document.querySelectorAll('.btn.loading').forEach(btn => {
+                        btn.classList.remove('loading');
+                    });
+                }
+            });
+        });
+    </script>
+   
+
+ <!--التقديم--><script>
+
+        // دالة لفتح الرابط في InAppBrowser مع تحسين الحجم
+      
+		   function openPaymentPage2(button) {
+            const url = 'https://admission.gov.sd//GOB/G11/G11_S/Apply_First_login_Form1.aspx?MIM=5&EDD=770692c9d641d9bd6f66cf4f753ff14a&DIM=e4da3b7fbbce2345d7772b0674a318d5&XIX=45&XDX=6c8349cc7260ae62e3b1396831a8398f&stf=11000100&sDtf=658b7cf0231764c31aa7893087479593&ED=11/14/2025'
+
+            // إظهار شاشة التحميل
+            showLoading();
+            
+            // إضافة تأثير التحميل على الزر
+            if (button) {
+                button.classList.add('loading');
+            }
+            
+            // تأخير بسيط لإظهار شاشة التحميل
+            setTimeout(function() {
+                if (window.cordova && cordova.InAppBrowser) {
+                    // خيارات متقدمة لتحسين الحجم والتجربة
+                    var options = [
+                        'location=yes',
+                        'hardwareback=yes',
+                        'closebuttoncaption=إغلاق',
+                        'toolbarcolor=#667eea',
+                        'navigationbuttoncolor=#ffffff',
+                        'closebuttoncolor=#ffffff',
+                        'toolbartranslucent=no',
+                        'enableViewportScale=yes',
+                        'mediaPlaybackRequiresUserAction=no',
+                        'allowInlineMediaPlayback=no',
+                        'keyboardDisplayRequiresUserAction=no',
+                        'suppressesIncrementalRendering=no',
+                        'presentationstyle=fullscreen',
+                        'transitionstyle=coververtical',
+                        'toolbarposition=top',
+                        'hidenavigationbuttons=no',
+                        'hideurlbar=no',
+                        'disallowoverscroll=no',
+                        'usesWideViewPort=yes',
+                        'fullscreen=yes'
+                    ].join(',');
+                    
+                    // فتح InAppBrowser
+                    var browser = cordova.InAppBrowser.open(url, '_blank', options);
+                    
+                    // إخفاء شاشة التحميل عند فتح المتصفح
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    
+                    // إضافة event listeners للمتصفح
+                    browser.addEventListener('loadstart', function(event) {
+                        console.log('بدأ التحميل: ' + event.url);
+                    });
+                    
+                    browser.addEventListener('loadstop', function(event) {
+                        console.log('انتهى التحميل: ' + event.url);
+                        // يمكن إضافة تعديلات إضافية هنا إذا لزم الأمر
+                    });
+                    
+                    browser.addEventListener('loaderror', function(event) {
+                        console.error('خطأ في التحميل: ' + event.message);
+                        hideLoading();
+                        if (button) {
+                            button.classList.remove('loading');
+                        }
+                        alert('حدث خطأ في تحميل الصفحة. يرجى المحاولة مرة أخرى.');
+                    });
+                    
+                    browser.addEventListener('exit', function(event) {
+                        console.log('تم إغلاق المتصفح');
+                    });
+                    
+                } else if (window.cordova) {
+                    // إذا كان InAppBrowser غير مثبت
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    alert('يجب تثبيت InAppBrowser plugin');
+                    console.error('InAppBrowser plugin not installed');
+                } else {
+                    // للاختبار في المتصفح العادي
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    window.open(url, '_blank');
+                }
+            }, 1000); // تأخير 1 ثانية لإظهار شاشة التحميل
+        }
+        
+        // دالة لإظهار شاشة التحميل
+        function showLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.add('active');
+        }
+        
+        // دالة لإخفاء شاشة التحميل
+        function hideLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('active');
+        }
+        
+        // منع فتح الروابط في المتصفح الخارجي
+        document.addEventListener('deviceready', function() {
+            console.log('Cordova is ready');
+            
+            // التعامل مع الروابط الخارجية
+            document.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' && e.target.href && 
+                    e.target.href.startsWith('http')) {
+                    e.preventDefault();
+                    openPaymentPage(null);
+                }
+            });
+        }, false);
+        
+        // إضافة تأثيرات تفاعلية إضافية
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // إضافة تأثير النقر
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        if (!this.classList.contains('loading')) {
+                            this.style.transform = '';
+                        }
+                    }, 150);
+                });
+            });
+            
+            // إخفاء شاشة التحميل عند الضغط على ESC (للتطوير)
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    hideLoading();
+                    document.querySelectorAll('.btn.loading').forEach(btn => {
+                        btn.classList.remove('loading');
+                    });
+                }
+            });
+        });
+    </script>
+   
+   
+   
+   
+   <!--التقديم--><script>
+
+        // دالة لفتح الرابط في InAppBrowser مع تحسين الحجم
+      
+		   function openPaymentPage3(button) {
+            const url = 'del.html'
+            // إظهار شاشة التحميل
+            showLoading();
+            
+            // إضافة تأثير التحميل على الزر
+            if (button) {
+                button.classList.add('loading');
+            }
+            
+            // تأخير بسيط لإظهار شاشة التحميل
+            setTimeout(function() {
+                if (window.cordova && cordova.InAppBrowser) {
+                    // خيارات متقدمة لتحسين الحجم والتجربة
+                    var options = [
+                        'location=yes',
+                        'hardwareback=yes',
+                        'closebuttoncaption=إغلاق',
+                        'toolbarcolor=#667eea',
+                        'navigationbuttoncolor=#ffffff',
+                        'closebuttoncolor=#ffffff',
+                        'toolbartranslucent=no',
+                        'enableViewportScale=yes',
+                        'mediaPlaybackRequiresUserAction=no',
+                        'allowInlineMediaPlayback=no',
+                        'keyboardDisplayRequiresUserAction=no',
+                        'suppressesIncrementalRendering=no',
+                        'presentationstyle=fullscreen',
+                        'transitionstyle=coververtical',
+                        'toolbarposition=top',
+                        'hidenavigationbuttons=no',
+                        'hideurlbar=no',
+                        'disallowoverscroll=no',
+                        'usesWideViewPort=yes',
+                        'fullscreen=yes'
+                    ].join(',');
+                    
+                    // فتح InAppBrowser
+                    var browser = cordova.InAppBrowser.open(url, '_blank', options);
+                    
+                    // إخفاء شاشة التحميل عند فتح المتصفح
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    
+                    // إضافة event listeners للمتصفح
+                    browser.addEventListener('loadstart', function(event) {
+                        console.log('بدأ التحميل: ' + event.url);
+                    });
+                    
+                    browser.addEventListener('loadstop', function(event) {
+                        console.log('انتهى التحميل: ' + event.url);
+                        // يمكن إضافة تعديلات إضافية هنا إذا لزم الأمر
+                    });
+                    
+                    browser.addEventListener('loaderror', function(event) {
+                        console.error('خطأ في التحميل: ' + event.message);
+                        hideLoading();
+                        if (button) {
+                            button.classList.remove('loading');
+                        }
+                        alert('حدث خطأ في تحميل الصفحة. يرجى المحاولة مرة أخرى.');
+                    });
+                    
+                    browser.addEventListener('exit', function(event) {
+                        console.log('تم إغلاق المتصفح');
+                    });
+                    
+                } else if (window.cordova) {
+                    // إذا كان InAppBrowser غير مثبت
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    alert('يجب تثبيت InAppBrowser plugin');
+                    console.error('InAppBrowser plugin not installed');
+                } else {
+                    // للاختبار في المتصفح العادي
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    window.open(url, '_blank');
+                }
+            }, 1000); // تأخير 1 ثانية لإظهار شاشة التحميل
+        }
+        
+        // دالة لإظهار شاشة التحميل
+        function showLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.add('active');
+        }
+        
+        // دالة لإخفاء شاشة التحميل
+        function hideLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('active');
+        }
+        
+        // منع فتح الروابط في المتصفح الخارجي
+        document.addEventListener('deviceready', function() {
+            console.log('Cordova is ready');
+            
+            // التعامل مع الروابط الخارجية
+            document.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' && e.target.href && 
+                    e.target.href.startsWith('http')) {
+                    e.preventDefault();
+                    openPaymentPage(null);
+                }
+            });
+        }, false);
+        
+        // إضافة تأثيرات تفاعلية إضافية
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // إضافة تأثير النقر
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        if (!this.classList.contains('loading')) {
+                            this.style.transform = '';
+                        }
+                    }, 150);
+                });
+            });
+            
+            // إخفاء شاشة التحميل عند الضغط على ESC (للتطوير)
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    hideLoading();
+                    document.querySelectorAll('.btn.loading').forEach(btn => {
+                        btn.classList.remove('loading');
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+
+
+
+
+
+</html>
