@@ -3,424 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام استرجاع البيانات من التلجرام</title>
+    <title>اختبار Telegram API</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .header {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .header h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 32px;
-        }
-        
-        .controls {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            margin: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
-        }
-        
-        .btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-        }
-        
-        .btn.secondary {
-            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
-        }
-        
-        .btn.danger {
-            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
-        }
-        
-        .data-container {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            min-height: 400px;
-        }
-        
-        .data-item {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-            border-right: 4px solid #667eea;
-        }
-        
-        .data-item:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .data-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .data-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
-        
-        .data-phone {
-            background: #667eea;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 14px;
-        }
-        
-        .data-time {
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .alert {
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
-            text-align: center;
-            display: none;
-        }
-        
-        .alert.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .alert.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .alert.info {
-            background: #cce7ff;
-            color: #004085;
-            border: 1px solid #b3d9ff;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: #666;
-        }
-        
-        .loading-spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #667eea;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .debug-info {
-            background: #f8f9fa;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 20px;
-            font-family: monospace;
-            font-size: 12px;
-            display: none;
-        }
+        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .btn { background: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .btn:disabled { background: #ccc; cursor: not-allowed; }
+        .result { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; white-space: pre-wrap; font-family: monospace; }
+        .success { color: #155724; background: #d4edda; }
+        .error { color: #721c24; background: #f8d7da; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>📊 نظام استرجاع البيانات من التلجرام</h1>
-            <p>جلب البيانات الحقيقية من قناتك مباشرة</p>
+        <h1>🔧 اختبار Telegram API</h1>
+        
+        <div>
+            <button class="btn" onclick="testConnection()">🔗 اختبار الاتصال</button>
+            <button class="btn" onclick="getBotInfo()">🤖 معلومات البوت</button>
+            <button class="btn" onclick="getMessages()">📨 جلب الرسائل</button>
         </div>
         
-        <div class="controls">
-            <button class="btn" id="testConnectionBtn">
-                🔗 اختبار الاتصال
-            </button>
-            <button class="btn" id="loadMessagesBtn">
-                📨 جلب الرسائل من التلجرام
-            </button>
-            <button class="btn secondary" id="clearDataBtn">
-                🗑️ مسح العرض
-            </button>
-            
-            <div style="margin-top: 15px;">
-                <button class="btn secondary" id="showDebugBtn">
-                    🐛 عرض معلومات التصحيح
-                </button>
-            </div>
+        <div id="result" class="result">النتيجة ستظهر هنا...</div>
+        
+        <div style="margin-top: 20px;">
+            <h3>🔗 رابط السكربت:</h3>
+            <input type="text" id="scriptUrl" style="width: 100%; padding: 10px; margin: 5px 0;" 
+                   value="https://script.google.com/macros/s/your-script-id/exec">
+            <button class="btn" onclick="updateScriptUrl()">🔄 تحديث الرابط</button>
         </div>
-        
-        <div id="alert" class="alert"></div>
-        
-        <div class="data-container">
-            <div id="dataList">
-                <div class="loading">
-                    <div>📭</div>
-                    <h3>مرحباً في نظام استرجاع البيانات</h3>
-                    <p>انقر على "جلب الرسائل من التلجرام" لبدء تحميل البيانات الحقيقية من قناتك</p>
-                </div>
-            </div>
-        </div>
-        
-        <div id="debugInfo" class="debug-info"></div>
     </div>
 
     <script>
-        // 🔧 رابط السكربت - ضع رابط النشر الحقيقي هنا
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzsfuHKxzq2yZAjhKm-C268-Wl7jQ7ciSpPkWpnKZ15QICHF-9id5XWZR7S8rWeHAjl/exec';
+        let SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzsfuHKxzq2yZAjhKm-C268-Wl7jQ7ciSpPkWpnKZ15QICHF-9id5XWZR7S8rWeHAjl/exec';
         
-        // العناصر
-        const testConnectionBtn = document.getElementById('testConnectionBtn');
-        const loadMessagesBtn = document.getElementById('loadMessagesBtn');
-        const clearDataBtn = document.getElementById('clearDataBtn');
-        const showDebugBtn = document.getElementById('showDebugBtn');
-        const alertDiv = document.getElementById('alert');
-        const dataList = document.getElementById('dataList');
-        const debugInfo = document.getElementById('debugInfo');
-        
-        function showAlert(message, type = 'info') {
-            alertDiv.textContent = message;
-            alertDiv.className = `alert ${type}`;
-            alertDiv.style.display = 'block';
-            
-            if (type !== 'info') {
-                setTimeout(() => {
-                    alertDiv.style.display = 'none';
-                }, 5000);
-            }
+        function updateScriptUrl() {
+            SCRIPT_URL = document.getElementById('scriptUrl').value;
+            showResult('✅ تم تحديث رابط السكربت: ' + SCRIPT_URL, 'success');
         }
         
-        function showLoading() {
-            dataList.innerHTML = `
-                <div class="loading">
-                    <div class="loading-spinner"></div>
-                    <p>جاري تحميل البيانات...</p>
-                </div>
-            `;
+        function showResult(message, type = '') {
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = typeof message === 'string' ? message : JSON.stringify(message, null, 2);
+            resultDiv.className = `result ${type}`;
         }
         
-        // 🔗 اختبار الاتصال بالسكربت
         async function testConnection() {
-            showAlert('🔗 جاري اختبار الاتصال...', 'info');
-            testConnectionBtn.disabled = true;
-            testConnectionBtn.textContent = '⏳ جاري الاختبار...';
+            showResult('🔗 جاري اختبار الاتصال...');
+            const btn = event.target;
+            btn.disabled = true;
             
             try {
-                const response = await fetch(`${SCRIPT_URL}?action=test`);
-                const result = await response.json();
-                
-                if (result.success) {
-                    showAlert('✅ الاتصال يعمل بنجاح!', 'success');
-                } else {
-                    throw new Error(result.message);
-                }
+                const response = await fetch(SCRIPT_URL + '?action=test');
+                const data = await response.json();
+                showResult(data, data.success ? 'success' : 'error');
             } catch (error) {
-                showAlert(`❌ خطأ في الاتصال: ${error.message}`, 'error');
+                showResult({ success: false, message: 'خطأ في الاتصال: ' + error.message }, 'error');
             } finally {
-                testConnectionBtn.disabled = false;
-                testConnectionBtn.textContent = '🔗 اختبار الاتصال';
+                btn.disabled = false;
             }
         }
         
-        // 📨 جلب الرسائل الحقيقية من التلجرام
-        async function loadTelegramMessages() {
-            showLoading();
-            showAlert('📨 جاري جلب الرسائل من التلجرام...', 'info');
-            loadMessagesBtn.disabled = true;
-            loadMessagesBtn.textContent = '⏳ جاري التحميل...';
+        async function getBotInfo() {
+            showResult('🤖 جاري جلب معلومات البوت...');
+            const btn = event.target;
+            btn.disabled = true;
             
             try {
-                const response = await fetch(`${SCRIPT_URL}?action=getMessages`);
-                const result = await response.json();
-                
-                // حفظ معلومات التصحيح
-                debugInfo.innerHTML = `<strong>استجابة السكربت:</strong><br>${JSON.stringify(result, null, 2)}`;
-                
-                if (result.success) {
-                    displayMessages(result.data);
-                    showAlert(`✅ تم جلب ${result.data ? result.data.length : 0} رسالة بنجاح`, 'success');
-                } else {
-                    throw new Error(result.message || 'Unknown error');
-                }
+                const response = await fetch(SCRIPT_URL + '?action=getMe');
+                const data = await response.json();
+                showResult(data, data.success ? 'success' : 'error');
             } catch (error) {
-                console.error('Error:', error);
-                dataList.innerHTML = `
-                    <div class="loading">
-                        <div>❌</div>
-                        <h3>خطأ في جلب البيانات</h3>
-                        <p>${error.message}</p>
-                        <p style="font-size: 14px; margin-top: 10px;">تحقق من رابط السكربت وإعدادات البوت</p>
-                    </div>
-                `;
-                showAlert(`❌ خطأ في جلب البيانات: ${error.message}`, 'error');
+                showResult({ success: false, message: 'خطأ: ' + error.message }, 'error');
             } finally {
-                loadMessagesBtn.disabled = false;
-                loadMessagesBtn.textContent = '📨 جلب الرسائل من التلجرام';
+                btn.disabled = false;
             }
         }
         
-        // 🎯 عرض الرسائل
-        function displayMessages(messages) {
-            if (!messages || messages.length === 0) {
-                dataList.innerHTML = `
-                    <div class="loading">
-                        <div>📭</div>
-                        <h3>لا توجد رسائل</h3>
-                        <p>لم يتم العثور على أي رسائل في القناة</p>
-                    </div>
-                `;
-                return;
-            }
+        async function getMessages() {
+            showResult('📨 جاري جلب الرسائل من التلجرام...');
+            const btn = event.target;
+            btn.disabled = true;
             
-            dataList.innerHTML = messages.map(msg => {
-                const data = parseMessage(msg.text);
-                const messageDate = new Date(msg.date);
-                
-                return `
-                    <div class="data-item">
-                        <div class="data-header">
-                            <span class="data-name">${data.name || 'رسالة جديدة'}</span>
-                            <span class="data-phone">${data.phone || 'لا يوجد رقم'}</span>
-                            <span class="data-time">${messageDate.toLocaleString('ar-SA')}</span>
-                        </div>
-                        
-                        ${data.email ? `<div><strong>📧 البريد:</strong> ${data.email}</div>` : ''}
-                        ${data.service ? `<div><strong>🎯 الخدمة:</strong> ${data.service}</div>` : ''}
-                        ${data.message ? `<div style="margin-top: 10px;"><strong>💬 الرسالة:</strong> ${data.message}</div>` : ''}
-                        
-                        <div style="margin-top: 15px; padding: 10px; background: #e9ecef; border-radius: 5px; font-size: 12px;">
-                            <strong>النص الأصلي:</strong><br>
-                            ${msg.text || 'لا يوجد نص'}
-                        </div>
-                        
-                        <div style="margin-top: 10px; font-size: 11px; color: #666;">
-                            🆔 ${msg.id} | 📢 ${msg.chat_title} | ⏰ ${messageDate.toLocaleString('ar-SA')}
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        // 🧹 تحليل الرسالة
-        function parseMessage(text) {
-            if (!text) return {};
-            
-            const data = {};
-            
-            // استخراج البيانات من النص
-            const extractValue = (key) => {
-                const regex = new RegExp(`${key}\\s*:\\s*([^\\n]+)`);
-                const match = text.match(regex);
-                return match ? match[1].trim() : '';
-            };
-            
-            data.name = extractValue('👤 الاسم') || extractValue('الاسم');
-            data.phone = extractValue('📞 الهاتف') || extractValue('الهاتف');
-            data.email = extractValue('📧 البريد') || extractValue('البريد');
-            data.service = extractValue('🎯 الخدمة') || extractValue('الخدمة');
-            data.message = extractValue('💬 الرسالة') || extractValue('الرسالة');
-            
-            return data;
-        }
-        
-        // 🗑️ مسح العرض
-        function clearData() {
-            dataList.innerHTML = `
-                <div class="loading">
-                    <div>📭</div>
-                    <h3>تم مسح البيانات</h3>
-                    <p>انقر على "جلب الرسائل من التلجرام" لتحميل البيانات مرة أخرى</p>
-                </div>
-            `;
-            showAlert('🗑️ تم مسح البيانات المعروضة', 'info');
-        }
-        
-        // 🐛 تبديل عرض معلومات التصحيح
-        function toggleDebug() {
-            if (debugInfo.style.display === 'block') {
-                debugInfo.style.display = 'none';
-                showDebugBtn.textContent = '🐛 عرض معلومات التصحيح';
-            } else {
-                debugInfo.style.display = 'block';
-                showDebugBtn.textContent = '🐛 إخفاء معلومات التصحيح';
+            try {
+                const response = await fetch(SCRIPT_URL + '?action=getMessages');
+                const data = await response.json();
+                showResult(data, data.success ? 'success' : 'error');
+            } catch (error) {
+                showResult({ success: false, message: 'خطأ: ' + error.message }, 'error');
+            } finally {
+                btn.disabled = false;
             }
         }
         
-        // 🎯 event listeners
-        testConnectionBtn.addEventListener('click', testConnection);
-        loadMessagesBtn.addEventListener('click', loadTelegramMessages);
-        clearDataBtn.addEventListener('click', clearData);
-        showDebugBtn.addEventListener('click', toggleDebug);
-        
-        console.log('✅ Telegram Data System initialized');
-        console.log('📝 Script URL:', SCRIPT_URL);
-        
-        // اختبار الاتصال التلقائي عند التحميل
-        setTimeout(testConnection, 1000);
+        // تحديث الرابط عند التحميل
+        document.getElementById('scriptUrl').value = SCRIPT_URL;
+        showResult('🏃‍♂️ جاهز للاختبار! انقر على أي زر لبدء الاختبار.');
     </script>
 </body>
 </html>
