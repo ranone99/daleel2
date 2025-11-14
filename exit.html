@@ -191,7 +191,12 @@
             redirectToNextPage();
         }
         
-       
+        // إضافة تأثير كتابة للنص (اختياري)
+        document.addEventListener('DOMContentLoaded', function() {
+            const text = "يمكنك الان الخروج من النظام بصورة امنة";
+            const pElement = document.querySelector('p');
+            pElement.textContent = "";
+            
             let i = 0;
             const typeWriter = setInterval(function() {
                 if (i < text.length) {
