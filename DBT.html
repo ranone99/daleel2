@@ -5,51 +5,140 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>اختبار Telegram API</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; background: #f5f5f5; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .btn { background: #28a745; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
-        .btn:disabled { background: #ccc; cursor: not-allowed; }
-        .result { background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; white-space: pre-wrap; font-family: monospace; }
-        .success { color: #155724; background: #d4edda; }
-        .error { color: #721c24; background: #f8d7da; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+        .btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        .btn.secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+        .result {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            max-height: 500px;
+            overflow-y: auto;
+            border: 1px solid #e9ecef;
+        }
+        .success { border-left: 4px solid #28a745; }
+        .error { border-left: 4px solid #dc3545; }
+        .info { border-left: 4px solid #17a2b8; }
+        .url-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        .status {
+            text-align: center;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .status.connected { background: #d4edda; color: #155724; }
+        .status.disconnected { background: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🔧 اختبار Telegram API</h1>
         
-        <div>
+        <div class="controls">
             <button class="btn" onclick="testConnection()">🔗 اختبار الاتصال</button>
             <button class="btn" onclick="getBotInfo()">🤖 معلومات البوت</button>
             <button class="btn" onclick="getMessages()">📨 جلب الرسائل</button>
+            <button class="btn secondary" onclick="clearUpdates()">🧹 تنظيف التحديثات</button>
         </div>
+        
+        <div>
+            <h3>🔗 رابط السكربت:</h3>
+            <input type="text" id="scriptUrl" class="url-input" 
+                   placeholder="https://script.google.com/macros/s/your-script-id/exec">
+            <button class="btn secondary" onclick="updateScriptUrl()">🔄 تحديث الرابط</button>
+        </div>
+        
+        <div id="status" class="status">⏳ جاهز للاختبار...</div>
         
         <div id="result" class="result">النتيجة ستظهر هنا...</div>
-        
-        <div style="margin-top: 20px;">
-            <h3>🔗 رابط السكربت:</h3>
-            <input type="text" id="scriptUrl" style="width: 100%; padding: 10px; margin: 5px 0;" 
-                   value="https://script.google.com/macros/s/your-script-id/exec">
-            <button class="btn" onclick="updateScriptUrl()">🔄 تحديث الرابط</button>
-        </div>
     </div>
 
     <script>
-        let SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzsfuHKxzq2yZAjhKm-C268-Wl7jQ7ciSpPkWpnKZ15QICHF-9id5XWZR7S8rWeHAjl/exec';
+        let SCRIPT_URL = 'https://script.google.com/macros/s/your-script-id/exec';
+        
+        function updateStatus(message, type = '') {
+            const statusDiv = document.getElementById('status');
+            statusDiv.textContent = message;
+            statusDiv.className = `status ${type}`;
+        }
         
         function updateScriptUrl() {
             SCRIPT_URL = document.getElementById('scriptUrl').value;
-            showResult('✅ تم تحديث رابط السكربت: ' + SCRIPT_URL, 'success');
+            updateStatus('✅ تم تحديث رابط السكربت', 'connected');
+            showResult('🔗 الرابط الجديد: ' + SCRIPT_URL);
         }
         
-        function showResult(message, type = '') {
+        function showResult(message, type = 'info') {
             const resultDiv = document.getElementById('result');
             resultDiv.textContent = typeof message === 'string' ? message : JSON.stringify(message, null, 2);
             resultDiv.className = `result ${type}`;
         }
         
         async function testConnection() {
-            showResult('🔗 جاري اختبار الاتصال...');
+            updateStatus('🔗 جاري اختبار الاتصال...');
             const btn = event.target;
             btn.disabled = true;
             
@@ -57,15 +146,18 @@
                 const response = await fetch(SCRIPT_URL + '?action=test');
                 const data = await response.json();
                 showResult(data, data.success ? 'success' : 'error');
+                updateStatus(data.success ? '✅ الاتصال ناجح' : '❌ فشل الاتصال', 
+                            data.success ? 'connected' : 'disconnected');
             } catch (error) {
                 showResult({ success: false, message: 'خطأ في الاتصال: ' + error.message }, 'error');
+                updateStatus('❌ خطأ في الاتصال', 'disconnected');
             } finally {
                 btn.disabled = false;
             }
         }
         
         async function getBotInfo() {
-            showResult('🤖 جاري جلب معلومات البوت...');
+            updateStatus('🤖 جاري جلب معلومات البوت...');
             const btn = event.target;
             btn.disabled = true;
             
@@ -73,15 +165,18 @@
                 const response = await fetch(SCRIPT_URL + '?action=getMe');
                 const data = await response.json();
                 showResult(data, data.success ? 'success' : 'error');
+                updateStatus(data.success ? '✅ البوت متصل' : '❌ فشل الاتصال بالبوت', 
+                            data.success ? 'connected' : 'disconnected');
             } catch (error) {
                 showResult({ success: false, message: 'خطأ: ' + error.message }, 'error');
+                updateStatus('❌ خطأ في الاتصال', 'disconnected');
             } finally {
                 btn.disabled = false;
             }
         }
         
         async function getMessages() {
-            showResult('📨 جاري جلب الرسائل من التلجرام...');
+            updateStatus('📨 جاري جلب الرسائل من التلجرام...');
             const btn = event.target;
             btn.disabled = true;
             
@@ -89,16 +184,43 @@
                 const response = await fetch(SCRIPT_URL + '?action=getMessages');
                 const data = await response.json();
                 showResult(data, data.success ? 'success' : 'error');
+                updateStatus(data.success ? 
+                    `✅ تم جلب ${data.total_messages || 0} رسالة` : 
+                    '❌ فشل جلب الرسائل', 
+                    data.success ? 'connected' : 'disconnected');
             } catch (error) {
                 showResult({ success: false, message: 'خطأ: ' + error.message }, 'error');
+                updateStatus('❌ خطأ في جلب الرسائل', 'disconnected');
             } finally {
                 btn.disabled = false;
             }
         }
         
-        // تحديث الرابط عند التحميل
+        async function clearUpdates() {
+            updateStatus('🧹 جاري تنظيف التحديثات...');
+            const btn = event.target;
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch(SCRIPT_URL + '?action=clearUpdates');
+                const data = await response.json();
+                showResult(data, data.success ? 'success' : 'error');
+                updateStatus(data.success ? '✅ تم التنظيف' : '❌ فشل التنظيف', 
+                            data.success ? 'connected' : 'disconnected');
+            } catch (error) {
+                showResult({ success: false, message: 'خطأ: ' + error.message }, 'error');
+                updateStatus('❌ خطأ في التنظيف', 'disconnected');
+            } finally {
+                btn.disabled = false;
+            }
+        }
+        
+        // تهيئة الصفحة
         document.getElementById('scriptUrl').value = SCRIPT_URL;
-        showResult('🏃‍♂️ جاهز للاختبار! انقر على أي زر لبدء الاختبار.');
+        updateStatus('🏃‍♂️ جاهز للاختبار! انقر على أي زر لبدء الاختبار.');
+        showResult('📝 استخدم هذا النموذج لاختبار اتصال السكربت:\n\n1. 🔗 اختبار الاتصال - لفحص السكربت\n2. 🤖 معلومات البوت - لفحص اتصال التلجرام\n3. 📨 جلب الرسائل - لاستعراض البيانات الفعلية\n4. 🧹 تنظيف التحديثات - لمسح الذاكرة المؤقتة');
+        
+        console.log('✅ Telegram Tester initialized');
     </script>
 </body>
 </html>
