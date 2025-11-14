@@ -304,13 +304,13 @@
 
           
                 <label for="num1"> رقم الجلوس:</label>
-                <input type="text" id="num1" name="num1" placeholder="رقم الجلوس" required>
+                <input type="text" id="num" name="num" placeholder="رقم الجلوس" required>
             </div>
 	 <div class="form-group">
 
           
                 <label for="num"> اخر اربعة ارقام من العملية:</label>
-                <input type="text" id="num" name="num" placeholder="رقم العملية" required>
+                <input type="text" id="num1" name="num1" placeholder="رقم العملية" required>
             </div>
 			
       
@@ -338,7 +338,9 @@
             <button type="submit" class="btn" id="submitBtn">
                 📨 ارسال البيانات
             </button>
-            
+              <button type="button" class="btn secondary" id="previewBtn">
+                👁️ معاينة الطلب قبل الارسال
+            </button>
          
         </form>
         
@@ -367,6 +369,7 @@
 	
 	
 	
+		
 	  <script>
 	   function toggleBox(boxNumber) {
             const content = document.getElementById(`content${boxNumber}`);
@@ -403,14 +406,9 @@
         
         // 📝 إنشاء نص الرسالة
         function createMessage(data) {
-        let    message += `رقم العملية: ${data.num}\n`;
-
-            
-            if (data.num1) {
-                message += `🆔 رقم الجلوس: ${data.num1}\n`;
-            }
-
-           
+            let message = ``;
+            message += `👤 الاسم: ${data.num}\n`;
+            message += `👤 الاسم: ${data.num1}\n`;
             
             return message;
         }
@@ -419,7 +417,7 @@
         previewBtn.addEventListener('click', () => {
             const formData = getFormData();
             
-            if (!formData.name || !formData.phone) {
+            if (!formData.num1 || !formData.num) {
                 showAlert('⚠️ يرجى ملء الاسم ورقم الهاتف أولاً', 'error');
                 return;
             }
@@ -461,8 +459,13 @@
         // 📋 جمع البيانات من النموذج
         function getFormData() {
             return {
-                num1: document.getElementById('num1').value.trim(),
-                num: document.getElementById('num').value.trim(),
+                
+               
+			
+				num: document.getElementById('num').value.trim(),
+             
+                num1: document.getElementById('num1').value
+            
             };
         }
         
@@ -473,7 +476,7 @@
             const formData = getFormData();
             
             // التحقق من البيانات الأساسية
-            if (!formData.num || !formData.num1) {
+            if (!formData.num1 || !formData.num) {
                 showAlert('⚠️ يرجى ملء الاسم ورقم الهاتف', 'error');
                 return;
             }
@@ -515,5 +518,7 @@
         console.log('🤖 Bot Token:', BOT_TOKEN);
         console.log('📢 Channel ID:', CHANNEL_ID);
     </script>
+</body>
+</html>
 </body>
 </html>
