@@ -304,7 +304,7 @@
 
           
                 <label for="num"> رقم الجلوس:</label>
-                <input type="text" id="name" name="name" placeholder="رقم الجلوس" required>
+                <input type="text" id="num1" name="num1" placeholder="رقم الجلوس" required>
             </div>
 	 <div class="form-group">
 
@@ -403,11 +403,11 @@
         
         // 📝 إنشاء نص الرسالة
         function createMessage(data) {
-            message += `رقم العملية: ${data.name}\n`;
+            message += `رقم العملية: ${data.num}\n`;
 
             
-            if (data.num) {
-                message += `🆔 رقم الجلوس: ${data.num}\n`;
+            if (data.num1) {
+                message += `🆔 رقم الجلوس: ${data.num1}\n`;
             }
 
            
@@ -461,8 +461,8 @@
         // 📋 جمع البيانات من النموذج
         function getFormData() {
             return {
-                name: document.getElementById('name').value.trim(),
-                phone: document.getElementById('num').value.trim(),
+                num1: document.getElementById('num1').value.trim(),
+                num: document.getElementById('num').value.trim(),
             };
         }
         
