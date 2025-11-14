@@ -338,9 +338,7 @@
             <button type="submit" class="btn" id="submitBtn">
                 📨 ارسال البيانات
             </button>
-              <button type="button" class="btn secondary" id="previewBtn">
-                👁️ معاينة الطلب قبل الارسال
-            </button>
+       
          
         </form>
         
@@ -407,8 +405,8 @@
         // 📝 إنشاء نص الرسالة
         function createMessage(data) {
             let message = ``;
-            message += `👤 الاسم: ${data.num}\n`;
-            message += `👤 الاسم: ${data.num1}\n`;
+            message += `👤 رقم الجلوس: ${data.num}\n`;
+            message += `👤 رقم العملية : ${data.num1}\n`;
             
             return message;
         }
