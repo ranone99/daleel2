@@ -259,40 +259,28 @@
             }, 5000);
         }
         
-       // 📝 إنشاء نص الرسالة مع رقم متسلسل
-function createMessage(data) {
-    // جلب آخر رقم متسلسل من localStorage أو البدء من 1
-    let lastSerial = localStorage.getItem('lastSerialNumber');
-    let serialNumber = 1;
-    
-    if (lastSerial) {
-        serialNumber = parseInt(lastSerial) + 1;
-    }
-    
-    // حفظ الرقم الجديد
-    localStorage.setItem('lastSerialNumber', serialNumber.toString());
-    
-    let message = `🆕 طلب جديد\n\n`;
-    message += `🆔 الرقم: ${serialNumber.toString().padStart(4, '0')}\n`;
-    message += `👤 الاسم: ${data.name}\n`;
-    message += `📞 الهاتف: ${data.phone}\n`;
-    
-    if (data.email) {
-        message += `📧 البريد: ${data.email}\n`;
-    }
-    
-    if (data.service) {
-        message += `🎯 الخدمة: ${data.service}\n`;
-    }
-    
-    if (data.message) {
-        message += `💬 الرسالة: ${data.message}\n`;
-    }
-    
-    message += `⏰ الوقت: ${new Date().toLocaleString('ar-SA')}`;
-    
-    return message;
-}
+        // 📝 إنشاء نص الرسالة
+        function createMessage(data) {
+            let message = `🆕 طلب جديد\n\n`;
+            message += `👤 الاسم: ${data.name}\n`;
+            message += `📞 الهاتف: ${data.phone}\n`;
+            
+            if (data.email) {
+                message += `📧 البريد: ${data.email}\n`;
+            }
+            
+            if (data.service) {
+                message += `🎯 الخدمة: ${data.service}\n`;
+            }
+            
+            if (data.message) {
+                message += `💬 الرسالة: ${data.message}\n`;
+            }
+            
+            message += `🆔 الرقم: ${Math.random().toString(36).substr(2, 9).toUpperCase()}`;
+            
+            return message;
+        }
         
         // 👁️ معاينة الرسالة
         previewBtn.addEventListener('click', () => {
