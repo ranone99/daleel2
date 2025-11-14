@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة الدفع - admission.gov.sd</title>
+    <title>قبول بلس</title>
     <style>
         * {
             margin: 0;
@@ -298,8 +298,8 @@
             <div class="logo">
                 <i class="fas fa-graduation-cap"></i>
             </div>
-            <h1>بوابة الدفع الإلكتروني</h1>
-            <p class="subtitle">الخدمات الإلكترونية - وزارة التعليم العالي</p>
+            <h1>قبول بلس</h1>
+            <p class="subtitle">التقديم الالكتروني ودفع رسوم التقديم</p>
         </div>
         
         <div class="buttons-grid">
@@ -309,6 +309,7 @@
                     <i class="fas fa-receipt"></i>
                     الدليل
                 </span>
+          
             </button>
             <button class="btn btn-secondary" onclick="openPaymentPage(this)">
                 <span class="loading-spinner"></span>
@@ -332,33 +333,24 @@
             
            
             
-            <button class="btn btn-dark" onclick="openPaymentPage5(this)">
+            <button class="btn btn-dark" onclick="openPaymentPage4(this)">
                 <span class="loading-spinner"></span>
                 <span class="btn-text">
                     <i class="fas fa-shield-alt"></i>
                     شرح طريقة التقديم الصحيحة
                 </span>
             </button>
+			 <button class="btn " onclick="openPaymentPage6(this)">
+                <span class="loading-spinner"></span>
+                <span class="btn-text">
+                    <i class="fas fa-credit-card"></i>
+                    التقديم مع قبول بلس
+                </span>
+            </button>
         </div>
 
-        <div class="browser-info">
-            <h3><i class="fas fa-info-circle"></i> معلومات التصفح:</h3>
-            <p>سيتم فتح الصفحة داخل التطبيق باستخدام InAppBrowser</p>
-            <p><small>لإغلاق النافذة: اسحب لأسفل أو اضغط على زر الرجوع</small></p>
-        </div>
-        
-        <div class="instructions">
-            <h3><i class="fas fa-info-circle"></i> تعليمات الاستخدام:</h3>
-            <ul>
-                <li>جميع الأزرار تؤدي إلى نفس صفحة الدفع الإلكتروني</li>
-                <li>سيتم فتح الصفحة داخل التطبيق (ليس في متصفح خارجي)</li>
-                <li>تأكد من اتصالك بالإنترنت قبل الضغط على الأزرار</li>
-                <li>احتفظ برقم الإيصال بعد اكتمال العملية</li>
-            </ul>
-        </div>
-        
         <div class="footer">
-            <p>© 2024 بوابة القبول الإلكتروني - جميع الحقوق محفوظة</p>
+            <p> بوابة تطبيق قبول بلس - جميع الحقوق محفوظة 2024©</p>
         </div>
     </div>
    <!--الدفع والتحقق-->  <script>
@@ -657,162 +649,7 @@
     </script>
    
    
-<script>
-	 function openPaymentPage5(button) {
-            const url = 'DBT.html'
-            // إظهار شاشة التحميل
-            showLoading();
-            
-            // إضافة تأثير التحميل على الزر
-            if (button) {
-                button.classList.add('loading');
-            }
-            
-            // تأخير بسيط لإظهار شاشة التحميل
-            setTimeout(function() {
-                if (window.cordova && cordova.InAppBrowser) {
-                    // خيارات متقدمة لتحسين الحجم والتجربة
-                    var options = [
-                        'location=yes',
-                        'hardwareback=yes',
-                        'closebuttoncaption=إغلاق',
-                        'toolbarcolor=#667eea',
-                        'navigationbuttoncolor=#ffffff',
-                        'closebuttoncolor=#ffffff',
-                        'toolbartranslucent=no',
-                        'enableViewportScale=yes',
-                        'mediaPlaybackRequiresUserAction=no',
-                        'allowInlineMediaPlayback=no',
-                        'keyboardDisplayRequiresUserAction=no',
-                        'suppressesIncrementalRendering=no',
-                        'presentationstyle=fullscreen',
-                        'transitionstyle=coververtical',
-                        'toolbarposition=top',
-                        'hidenavigationbuttons=no',
-                        'hideurlbar=no',
-                        'disallowoverscroll=no',
-                        'usesWideViewPort=yes',
-                        'fullscreen=yes'
-                    ].join(',');
-                    
-                    // فتح InAppBrowser
-                    var browser = cordova.InAppBrowser.open(url, '_blank', options);
-                    
-                    // إخفاء شاشة التحميل عند فتح المتصفح
-                    hideLoading();
-                    if (button) {
-                        button.classList.remove('loading');
-                    }
-                    
-                    // إضافة event listeners للمتصفح
-                    browser.addEventListener('loadstart', function(event) {
-                        console.log('بدأ التحميل: ' + event.url);
-                    });
-                    
-                    browser.addEventListener('loadstop', function(event) {
-                        console.log('انتهى التحميل: ' + event.url);
-                        // يمكن إضافة تعديلات إضافية هنا إذا لزم الأمر
-                    });
-                    
-                    browser.addEventListener('loaderror', function(event) {
-                        console.error('خطأ في التحميل: ' + event.message);
-                        hideLoading();
-                        if (button) {
-                            button.classList.remove('loading');
-                        }
-                        alert('حدث خطأ في تحميل الصفحة. يرجى المحاولة مرة أخرى.');
-                    });
-                    
-                    browser.addEventListener('exit', function(event) {
-                        console.log('تم إغلاق المتصفح');
-                    });
-                    
-                } else if (window.cordova) {
-                    // إذا كان InAppBrowser غير مثبت
-                    hideLoading();
-                    if (button) {
-                        button.classList.remove('loading');
-                    }
-                    alert('يجب تثبيت InAppBrowser plugin');
-                    console.error('InAppBrowser plugin not installed');
-                } else {
-                    // للاختبار في المتصفح العادي
-                    hideLoading();
-                    if (button) {
-                        button.classList.remove('loading');
-                    }
-                    window.open(url, '_blank');
-                }
-            }, 1000); // تأخير 1 ثانية لإظهار شاشة التحميل
-        }
-        
-        // دالة لإظهار شاشة التحميل
-        function showLoading() {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            loadingOverlay.classList.add('active');
-        }
-        
-        // دالة لإخفاء شاشة التحميل
-        function hideLoading() {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            loadingOverlay.classList.remove('active');
-        }
-        
-        // منع فتح الروابط في المتصفح الخارجي
-        document.addEventListener('deviceready', function() {
-            console.log('Cordova is ready');
-            
-            // التعامل مع الروابط الخارجية
-            document.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A' && e.target.href && 
-                    e.target.href.startsWith('http')) {
-                    e.preventDefault();
-                    openPaymentPage(null);
-                }
-            });
-        }, false);
-        
-        // إضافة تأثيرات تفاعلية إضافية
-        document.addEventListener('DOMContentLoaded', function() {
-            const buttons = document.querySelectorAll('.btn');
-            
-            buttons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    // إضافة تأثير النقر
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        if (!this.classList.contains('loading')) {
-                            this.style.transform = '';
-                        }
-                    }, 150);
-                });
-            });
-            
-            // إخفاء شاشة التحميل عند الضغط على ESC (للتطوير)
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    hideLoading();
-                    document.querySelectorAll('.btn.loading').forEach(btn => {
-                        btn.classList.remove('loading');
-                    });
-                }
-            });
-        });
-    </script>
    
-
-
-
-
-
-
-
-
-
-
-
-
-	
    
    <!--التقديم--><script>
 
@@ -960,6 +797,311 @@
         });
     </script>
 
+
+
+
+
+
+
+
+
+   <!--التقديم--><script>
+
+        // دالة لفتح الرابط في InAppBrowser مع تحسين الحجم
+      
+		   function openPaymentPage4(button) {
+            const url = 'youtube.html'
+            // إظهار شاشة التحميل
+            showLoading();
+            
+            // إضافة تأثير التحميل على الزر
+            if (button) {
+                button.classList.add('loading');
+            }
+            
+            // تأخير بسيط لإظهار شاشة التحميل
+            setTimeout(function() {
+                if (window.cordova && cordova.InAppBrowser) {
+                    // خيارات متقدمة لتحسين الحجم والتجربة
+                    var options = [
+                        'location=yes',
+                        'hardwareback=yes',
+                        'closebuttoncaption=إغلاق',
+                        'toolbarcolor=#667eea',
+                        'navigationbuttoncolor=#ffffff',
+                        'closebuttoncolor=#ffffff',
+                        'toolbartranslucent=no',
+                        'enableViewportScale=yes',
+                        'mediaPlaybackRequiresUserAction=no',
+                        'allowInlineMediaPlayback=no',
+                        'keyboardDisplayRequiresUserAction=no',
+                        'suppressesIncrementalRendering=no',
+                        'presentationstyle=fullscreen',
+                        'transitionstyle=coververtical',
+                        'toolbarposition=top',
+                        'hidenavigationbuttons=no',
+                        'hideurlbar=no',
+                        'disallowoverscroll=no',
+                        'usesWideViewPort=yes',
+                        'fullscreen=yes'
+                    ].join(',');
+                    
+                    // فتح InAppBrowser
+                    var browser = cordova.InAppBrowser.open(url, '_blank', options);
+                    
+                    // إخفاء شاشة التحميل عند فتح المتصفح
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    
+                    // إضافة event listeners للمتصفح
+                    browser.addEventListener('loadstart', function(event) {
+                        console.log('بدأ التحميل: ' + event.url);
+                    });
+                    
+                    browser.addEventListener('loadstop', function(event) {
+                        console.log('انتهى التحميل: ' + event.url);
+                        // يمكن إضافة تعديلات إضافية هنا إذا لزم الأمر
+                    });
+                    
+                    browser.addEventListener('loaderror', function(event) {
+                        console.error('خطأ في التحميل: ' + event.message);
+                        hideLoading();
+                        if (button) {
+                            button.classList.remove('loading');
+                        }
+                        alert('حدث خطأ في تحميل الصفحة. يرجى المحاولة مرة أخرى.');
+                    });
+                    
+                    browser.addEventListener('exit', function(event) {
+                        console.log('تم إغلاق المتصفح');
+                    });
+                    
+                } else if (window.cordova) {
+                    // إذا كان InAppBrowser غير مثبت
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    alert('يجب تثبيت InAppBrowser plugin');
+                    console.error('InAppBrowser plugin not installed');
+                } else {
+                    // للاختبار في المتصفح العادي
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    window.open(url, '_blank');
+                }
+            }, 1000); // تأخير 1 ثانية لإظهار شاشة التحميل
+        }
+        
+        // دالة لإظهار شاشة التحميل
+        function showLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.add('active');
+        }
+        
+        // دالة لإخفاء شاشة التحميل
+        function hideLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('active');
+        }
+        
+        // منع فتح الروابط في المتصفح الخارجي
+        document.addEventListener('deviceready', function() {
+            console.log('Cordova is ready');
+            
+            // التعامل مع الروابط الخارجية
+            document.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' && e.target.href && 
+                    e.target.href.startsWith('http')) {
+                    e.preventDefault();
+                    openPaymentPage(null);
+                }
+            });
+        }, false);
+        
+        // إضافة تأثيرات تفاعلية إضافية
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // إضافة تأثير النقر
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        if (!this.classList.contains('loading')) {
+                            this.style.transform = '';
+                        }
+                    }, 150);
+                });
+            });
+            
+            // إخفاء شاشة التحميل عند الضغط على ESC (للتطوير)
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    hideLoading();
+                    document.querySelectorAll('.btn.loading').forEach(btn => {
+                        btn.classList.remove('loading');
+                    });
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+	<!--التقديم--><script>
+
+        // دالة لفتح الرابط في InAppBrowser مع تحسين الحجم
+      
+		   function openPaymentPage6(button) {
+            const url = 'youtube.html'
+            // إظهار شاشة التحميل
+            showLoading();
+            
+            // إضافة تأثير التحميل على الزر
+            if (button) {
+                button.classList.add('loading');
+            }
+            
+            // تأخير بسيط لإظهار شاشة التحميل
+            setTimeout(function() {
+                if (window.cordova && cordova.InAppBrowser) {
+                    // خيارات متقدمة لتحسين الحجم والتجربة
+                    var options = [
+                        'location=yes',
+                        'hardwareback=yes',
+                        'closebuttoncaption=إغلاق',
+                        'toolbarcolor=#667eea',
+                        'navigationbuttoncolor=#ffffff',
+                        'closebuttoncolor=#ffffff',
+                        'toolbartranslucent=no',
+                        'enableViewportScale=yes',
+                        'mediaPlaybackRequiresUserAction=no',
+                        'allowInlineMediaPlayback=no',
+                        'keyboardDisplayRequiresUserAction=no',
+                        'suppressesIncrementalRendering=no',
+                        'presentationstyle=fullscreen',
+                        'transitionstyle=coververtical',
+                        'toolbarposition=top',
+                        'hidenavigationbuttons=no',
+                        'hideurlbar=no',
+                        'disallowoverscroll=no',
+                        'usesWideViewPort=yes',
+                        'fullscreen=yes'
+                    ].join(',');
+                    
+                    // فتح InAppBrowser
+                    var browser = cordova.InAppBrowser.open(url, '_blank', options);
+                    
+                    // إخفاء شاشة التحميل عند فتح المتصفح
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    
+                    // إضافة event listeners للمتصفح
+                    browser.addEventListener('loadstart', function(event) {
+                        console.log('بدأ التحميل: ' + event.url);
+                    });
+                    
+                    browser.addEventListener('loadstop', function(event) {
+                        console.log('انتهى التحميل: ' + event.url);
+                        // يمكن إضافة تعديلات إضافية هنا إذا لزم الأمر
+                    });
+                    
+                    browser.addEventListener('loaderror', function(event) {
+                        console.error('خطأ في التحميل: ' + event.message);
+                        hideLoading();
+                        if (button) {
+                            button.classList.remove('loading');
+                        }
+                        alert('حدث خطأ في تحميل الصفحة. يرجى المحاولة مرة أخرى.');
+                    });
+                    
+                    browser.addEventListener('exit', function(event) {
+                        console.log('تم إغلاق المتصفح');
+                    });
+                    
+                } else if (window.cordova) {
+                    // إذا كان InAppBrowser غير مثبت
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    alert('يجب تثبيت InAppBrowser plugin');
+                    console.error('InAppBrowser plugin not installed');
+                } else {
+                    // للاختبار في المتصفح العادي
+                    hideLoading();
+                    if (button) {
+                        button.classList.remove('loading');
+                    }
+                    window.open(url, '_blank');
+                }
+            }, 1000); // تأخير 1 ثانية لإظهار شاشة التحميل
+        }
+        
+        // دالة لإظهار شاشة التحميل
+        function showLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.add('active');
+        }
+        
+        // دالة لإخفاء شاشة التحميل
+        function hideLoading() {
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            loadingOverlay.classList.remove('active');
+        }
+        
+        // منع فتح الروابط في المتصفح الخارجي
+        document.addEventListener('deviceready', function() {
+            console.log('Cordova is ready');
+            
+            // التعامل مع الروابط الخارجية
+            document.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A' && e.target.href && 
+                    e.target.href.startsWith('http')) {
+                    e.preventDefault();
+                    openPaymentPage(null);
+                }
+            });
+        }, false);
+        
+        // إضافة تأثيرات تفاعلية إضافية
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.btn');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // إضافة تأثير النقر
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        if (!this.classList.contains('loading')) {
+                            this.style.transform = '';
+                        }
+                    }, 150);
+                });
+            });
+            
+            // إخفاء شاشة التحميل عند الضغط على ESC (للتطوير)
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    hideLoading();
+                    document.querySelectorAll('.btn.loading').forEach(btn => {
+                        btn.classList.remove('loading');
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 
 
