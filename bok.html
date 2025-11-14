@@ -338,7 +338,7 @@
             <button type="submit" class="btn" id="submitBtn">
                 📨 ارسال البيانات
             </button>
-       
+           
          
         </form>
         
@@ -387,7 +387,7 @@
         // العناصر
         const form = document.getElementById('dataForm');
         const submitBtn = document.getElementById('submitBtn');
-        const previewBtn = document.getElementById('previewBtn');
+        
         const alertDiv = document.getElementById('alert');
         const messagePreview = document.getElementById('messagePreview');
         
@@ -406,24 +406,12 @@
         function createMessage(data) {
             let message = ``;
             message += `👤 رقم الجلوس: ${data.num}\n`;
-            message += `👤 رقم العملية : ${data.num1}\n`;
+            message += `👤 رقم العملية: ${data.num1}\n`;
             
             return message;
         }
         
-        // 👁️ معاينة الرسالة
-        previewBtn.addEventListener('click', () => {
-            const formData = getFormData();
-            
-            if (!formData.num1 || !formData.num) {
-                showAlert('⚠️ يرجى ملء الاسم ورقم الهاتف أولاً', 'error');
-                return;
-            }
-            
-            const message = createMessage(formData);
-            messagePreview.textContent = message;
-            messagePreview.style.display = 'block';
-        });
+      
         
         // 📤 إرسال البيانات إلى التلجرام
         async function sendToTelegram(message) {
