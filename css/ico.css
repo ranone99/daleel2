@@ -8,9 +8,9 @@
 
         /* التصميم الدائري للأيقونات */
         .icon-circle {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 30%;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -108,7 +108,7 @@
             margin-top: 10px;
             font-size: 14px;
             color: #333;
-            font-weight: 600;
+            font-weight: 400;
             text-align: center;
         }
 
@@ -120,4 +120,5 @@
         .icon-item:hover .icon-label {
             color: #007bff;
             transform: translateY(-2px);
+
         }
