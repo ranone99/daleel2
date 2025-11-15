@@ -1,1 +1,128 @@
+    /* شبكة الأيقونات */
+        .icons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* التصميم الدائري للأيقونات */
+        .icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 30%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        .icon-circle:hover {
+            transform: scale(1.15) rotate(5deg);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .icon-circle:active {
+            transform: scale(1.05);
+        }
+
+        /* تأثير الضوء عند التمرير */
+        .icon-circle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .icon-circle:hover::before {
+            left: 100%;
+        }
+
+        /* ألوان خاصة بكل منصة */
+        .facebook {
+            background: linear-gradient(135deg, #1877F2, #0D5FD6);
+        }
+
+        .youtube {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+        }
+
+        .whatsapp {
+            background: linear-gradient(135deg, #25D366, #128C7E);
+        }
+
+        .twitter {
+            background: linear-gradient(135deg, #1DA1F2, #0D8BD9);
+        }
+
+        .instagram {
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+        }
+
+        .linkedin {
+            background: linear-gradient(135deg, #0077B5, #005885);
+        }
+
+        .tiktok {
+            background: linear-gradient(135deg, #000000, #69C9D0, #EE1D52);
+        }
+
+        .snapchat {
+            background: linear-gradient(135deg, #FFFC00, #FFD800);
+            color: #000 !important;
+        }
+
+        .telegram {
+            background: linear-gradient(135deg, #0088CC, #006699);
+        }
+
+        .pinterest {
+            background: linear-gradient(135deg, #BD081C, #9C0718);
+        }
+
+        .discord {
+            background: linear-gradient(135deg, #5865F2, #4752C4);
+        }
+
+        .reddit {
+            background: linear-gradient(135deg, #FF5700, #E54D00);
+        }
+
+        .spotify {
+            background: linear-gradient(135deg, #1DB954, #1AA34A);
+        }
+
+        /* تسميات الأيقونات */
+        .icon-label {
+            margin-top: 7px;
+            font-size: 10px;
+            color: #333;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        .icon-item {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .icon-item:hover .icon-label {
+            color: #007bff;
+            transform: translateY(-2px);
+
+        }
+
+
+
 
