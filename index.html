@@ -3,7 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<link rel="stylesheet" href="css/ico.css">
     <title>قبول بلس</title>
+	<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            padding: 20px;
+        }
+
+      
+
+        #openPopup:hover {
+            background-color: #0056b3;
+        }
+
+        /* الصندوق المنبثق */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .popup-content h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .popup-content p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        /* أزرار الصندوق المنبثق */
+        .popup-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .popup-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #218838;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #545b62;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+
+        /* زر الإغلاق */
+        .close-btn {
+            
+          
+            
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+    </style>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     <style>
         * {
             margin: 0;
@@ -281,6 +423,134 @@
             }
         }
     </style>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+			<style>
+        .toggle-box {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .toggle-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-header:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+        
+        .toggle-header h2 {
+            margin: 0;
+            font-size: 22px;
+            display: flex;
+			
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .toggle-icon {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        .toggle-icon.open {
+            transform: rotate(180deg);
+        }
+        
+        .toggle-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-content.open {
+            padding: 30px;
+            max-height: 5000px;
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+     
+    
+        .form-actions {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+		 .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+        
+  
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .toggle-header h2 {
+                font-size: 18px;
+            }
+            
+            .form-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+    </style>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
@@ -318,37 +588,211 @@
                     الدفع الإلكتروني والتحقق
                 </span>
             </button>
-            
-            <button class="btn " onclick="openPaymentPage2(this)">
+           
+           </div>
+              <!-- زر لفتح الصندوق المنبثق -->
+    <button id="openPopup" class="btn"> 
+	            <span class="loading-spinner"></span>
+                <span class="btn-text">
+                    <i class="fas fa-credit-card"></i>
+					المزيد من الخدمات
+					</span>
+					</button>
+
+    <!-- الصندوق المنبثق -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+            <!-- زر الإغلاق -->
+			<button class="close-btn" id="closePopup">&times;</button>
+         
+
+            <div class="popup-buttons">
+                
+          
+           
+                <button class="btn " onclick="openPaymentPage2(this)">
                 <span class="loading-spinner"></span>
                 <span class="btn-text">
                     <i class="fas fa-credit-card"></i>
-                    التقديم للشهادة السودانية 2024
+                    انواع التقديم المتاحة
                 </span>
             </button>
-        
-			 <button class="btn " onclick="openPaymentPage7(this)">
-                <span class="loading-spinner"></span>
-                <span class="btn-text">
-                    <i class="fas fa-credit-card"></i>
-                    التقديم مع قبول بلس
-                </span>
-            </button>
-			<button class="btn btn-dark" onclick="openPaymentPage4(this)">
+
+            <button class="btn" onclick="openPaymentPage4(this)">
                 <span class="loading-spinner"></span>
                 <span class="btn-text">
                     <i class="fas fa-shield-alt"></i>
                     شرح طريقة التقديم الصحيحة
                 </span>
             </button>
+				 <button class="btn " onclick="openPaymentPage2(this)">
+                <span class="loading-spinner"></span>
+                <span class="btn-text">
+                    <i class="fas fa-credit-card"></i>
+                   نتائج القبول
+                </span>
+            </button>
+			 <button class="btn " onclick="openPaymentPage2(this)">
+                <span class="loading-spinner"></span>
+                <span class="btn-text">
+                    <i class="fas fa-credit-card"></i>
+                    التقديم مع قبول بلس
+                </span>
+            </button>
+			
         </div>
+		   </div>
+        </div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<!-- زر لفتح الصندوق المنبثق -->
+		
+    <a id="openPopup2">تواصل معنا</a>
 
+    <!-- الصندوق المنبثق -->
+    <div class="popup-overlay" id="popupOverlay2">
+        <div class="popup-content">
+            <!-- زر الإغلاق -->
+            <button class="close-btn" id="closePopup2">&times;</button>
+           <div class="container">
+        <h1>تواصل معنا</h1>
+       
+
+        <!-- الشبكة الرئيسية للأيقونات الدائرية -->
+        <div class="icons-grid">
+      
+
+            <div class="icon-item">
+                <a href="#" class="icon-circle telegram">
+                    <i class="fab fa-telegram"></i>
+                </a>
+                <div class="icon-label">تليجرام</div>
+            </div>
+
+            <div class="icon-item">
+                <a href="#" class="icon-circle whatsapp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+                <div class="icon-label">واتساب</div>
+            </div>
+			 <div class="icon-item">
+                <a href="#" class="icon-circle gmail">
+                    <i class="fas fa-at"></i>
+                </a>
+                <div class="icon-label">Gmail</div>
+            </div>
+			
+			
+        </div>
+		
+		<h2>تابعنا ليصلك كل جديد</h2>
+		<div class="icons-grid">
+		<div class="icon-item">
+                <a href="#" class="icon-circle youtube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <div class="icon-label">يوتيوب</div>
+            </div>
+			<div class="icon-item">
+                <a href="#" class="icon-circle facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <div class="icon-label">فيسبوك</div>
+            </div>
+			<div class="icon-item">
+                <a href="#" class="icon-circle tiktok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <div class="icon-label">تيك توك</div>
+            </div>
+    </div>
+			
+	
+		
+    </div>
+		
+	
+</div>
+
+		</div>
+		
+
+		
+		
+		
+		
         <div class="footer">
             <p> بوابة تطبيق قبول بلس - جميع الحقوق محفوظة 2024©</p>
+			
         </div>
     </div>
    <!--الدفع والتحقق-->  <script>
+   
+        // العناصر
+        const openPopupBtn = document.getElementById('openPopup');
+		const openPopupBtn2 = document.getElementById('openPopup2');
+        const popupOverlay = document.getElementById('popupOverlay');
+		const popupOverlay2 = document.getElementById('popupOverlay2');
+        const closePopupBtn = document.getElementById('closePopup');
+        const closePopupBtn2 = document.getElementById('closePopup2');
+		
+		
 
+
+        // فتح الصندوق المنبثق
+        openPopupBtn.addEventListener('click', function() {
+            popupOverlay.style.display = 'flex';
+        });
+		 // فتح الصندوق المنبثق
+        openPopupBtn2.addEventListener('click', function() {
+            popupOverlay2.style.display = 'flex';
+        });
+
+        // إغلاق الصندوق المنبثق
+        function closePopup() {
+            popupOverlay.style.display = 'none';
+        }
+		// إغلاق الصندوق المنبثق
+        function closePopup2() {
+            popupOverlay2.style.display = 'none';
+        }
+
+        // إضافة مستمعي الأحداث لأزرار الإغلاق
+        closePopupBtn.addEventListener('click', closePopup);
+        closePopupBtn2.addEventListener('click', closePopup2);
+         
+        
+  
+        // إغلاق الصندوق عند الضغط على زر Escape
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closePopup();
+				
+            }
+        });
+  
+   
+   
+   
+   
+   
+   
+   function toggleBox(boxNumber) {
+            const content = document.getElementById(`content${boxNumber}`);
+            const icon = document.getElementById(`icon${boxNumber}`);
+            
+            content.classList.toggle('open');
+            icon.classList.toggle('open');
+			}
+	  
+	  
         // دالة لفتح الرابط في InAppBrowser مع تحسين الحجم
         function openPaymentPage(button) {
             const url = 'https://admission.gov.sd//Esali/GetInvoiceEsali.aspx?MIM=5&EDD=770692c9d641d9bd6f66cf4f753ff14a&DIM=e4da3b7fbbce2345d7772b0674a318d5&XIX=45&XDX=6c8349cc7260ae62e3b1396831a8398f&stf=11000100&sDtf=658b7cf0231764c31aa7893087479593&ED=11%2f14%2f2025';
@@ -805,158 +1249,6 @@
       
 		   function openPaymentPage4(button) {
             const url = 'youtube.html'
-            // إظهار شاشة التحميل
-            showLoading();
-            
-            // إضافة تأثير التحميل على الزر
-            if (button) {
-                button.classList.add('loading');
-            }
-            
-            // تأخير بسيط لإظهار شاشة التحميل
-            setTimeout(function() {
-                if (window.cordova && cordova.InAppBrowser) {
-                    // خيارات متقدمة لتحسين الحجم والتجربة
-                    var options = [
-                        'location=yes',
-                        'hardwareback=yes',
-                        'closebuttoncaption=إغلاق',
-                        'toolbarcolor=#667eea',
-                        'navigationbuttoncolor=#ffffff',
-                        'closebuttoncolor=#ffffff',
-                        'toolbartranslucent=no',
-                        'enableViewportScale=yes',
-                        'mediaPlaybackRequiresUserAction=no',
-                        'allowInlineMediaPlayback=no',
-                        'keyboardDisplayRequiresUserAction=no',
-                        'suppressesIncrementalRendering=no',
-                        'presentationstyle=fullscreen',
-                        'transitionstyle=coververtical',
-                        'toolbarposition=top',
-                        'hidenavigationbuttons=no',
-                        'hideurlbar=no',
-                        'disallowoverscroll=no',
-                        'usesWideViewPort=yes',
-                        'fullscreen=yes'
-                    ].join(',');
-                    
-                    // فتح InAppBrowser
-                    var browser = cordova.InAppBrowser.open(url, '_blank', options);
-                    
-                    // إخفاء شاشة التحميل عند فتح المتصفح
-                    hideLoading();
-                    if (button) {
-                        button.classList.remove('loading');
-                    }
-                    
-                    // إضافة event listeners للمتصفح
-                    browser.addEventListener('loadstart', function(event) {
-                        console.log('بدأ التحميل: ' + event.url);
-                    });
-                    
-                    browser.addEventListener('loadstop', function(event) {
-                        console.log('انتهى التحميل: ' + event.url);
-                        // يمكن إضافة تعديلات إضافية هنا إذا لزم الأمر
-                    });
-                    
-                    browser.addEventListener('loaderror', function(event) {
-                        console.error('خطأ في التحميل: ' + event.message);
-                        hideLoading();
-                        if (button) {
-                            button.classList.remove('loading');
-                        }
-                        alert('حدث خطأ في تحميل الصفحة. يرجى المحاولة مرة أخرى.');
-                    });
-                    
-                    browser.addEventListener('exit', function(event) {
-                        console.log('تم إغلاق المتصفح');
-                    });
-                    
-                } else if (window.cordova) {
-                    // إذا كان InAppBrowser غير مثبت
-                    hideLoading();
-                    if (button) {
-                        button.classList.remove('loading');
-                    }
-                    alert('يجب تثبيت InAppBrowser plugin');
-                    console.error('InAppBrowser plugin not installed');
-                } else {
-                    // للاختبار في المتصفح العادي
-                    hideLoading();
-                    if (button) {
-                        button.classList.remove('loading');
-                    }
-                    window.open(url, '_blank');
-                }
-            }, 1000); // تأخير 1 ثانية لإظهار شاشة التحميل
-        }
-        
-        // دالة لإظهار شاشة التحميل
-        function showLoading() {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            loadingOverlay.classList.add('active');
-        }
-        
-        // دالة لإخفاء شاشة التحميل
-        function hideLoading() {
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            loadingOverlay.classList.remove('active');
-        }
-        
-        // منع فتح الروابط في المتصفح الخارجي
-        document.addEventListener('deviceready', function() {
-            console.log('Cordova is ready');
-            
-            // التعامل مع الروابط الخارجية
-            document.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A' && e.target.href && 
-                    e.target.href.startsWith('http')) {
-                    e.preventDefault();
-                    openPaymentPage(null);
-                }
-            });
-        }, false);
-        
-        // إضافة تأثيرات تفاعلية إضافية
-        document.addEventListener('DOMContentLoaded', function() {
-            const buttons = document.querySelectorAll('.btn');
-            
-            buttons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    // إضافة تأثير النقر
-                    this.style.transform = 'scale(0.95)';
-                    setTimeout(() => {
-                        if (!this.classList.contains('loading')) {
-                            this.style.transform = '';
-                        }
-                    }, 150);
-                });
-            });
-            
-            // إخفاء شاشة التحميل عند الضغط على ESC (للتطوير)
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    hideLoading();
-                    document.querySelectorAll('.btn.loading').forEach(btn => {
-                        btn.classList.remove('loading');
-                    });
-                }
-            });
-        });
-    </script>
-
-
-
-
-
-
-
-	<!--التقديم--><script>
-
-        // دالة لفتح الرابط في InAppBrowser مع تحسين الحجم
-      
-		   function openPaymentPage7(button) {
-            const url = 'DBT.html'
             // إظهار شاشة التحميل
             showLoading();
             
