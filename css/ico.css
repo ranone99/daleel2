@@ -1,21 +1,37 @@
     /* شبكة الأيقونات */
         .icons-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
-            gap: 15px;
-            margin-bottom: 5px;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
         /* التصميم الدائري للأيقونات */
         .icon-circle {
-            width: 50px;
-            height: 50px;
+            width: 90px;
+            height: 90px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 15px;
+            font-size: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+.icon-circle2 {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
@@ -59,7 +75,7 @@
         }
 
         .whatsapp {
-            background: linear-gradient(135deg, #25D366, #128C7E);
+            background: linear-gradient(135deg, #25D366, #14DC11);
         }
 
         .twitter {
@@ -75,7 +91,7 @@
         }
 
         .tiktok {
-            background: linear-gradient(135deg, #000000, #69C9D0, #EE1D52);
+            background: linear-gradient(135deg, #000000, #000000, #000000);
         }
 
         .snapchat {
@@ -102,13 +118,16 @@
         .spotify {
             background: linear-gradient(135deg, #1DB954, #1AA34A);
         }
+ .gmail {
+            background: linear-gradient(135deg, #FF0000, #CC0000);
+        }
 
         /* تسميات الأيقونات */
         .icon-label {
-            margin-top: 7px;
-            font-size: 10px;
+            margin-top: 10px;
+            font-size: 14px;
             color: #333;
-            font-weight: 400;
+            font-weight: 600;
             text-align: center;
         }
 
@@ -120,12 +139,4 @@
         .icon-item:hover .icon-label {
             color: #007bff;
             transform: translateY(-2px);
-
         }
-
-
-
-
-
-
-
