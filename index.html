@@ -521,21 +521,21 @@
                 <!-- الشبكة الرئيسية للأيقونات الدائرية -->
                 <div class="icons-grid">
                     <div class="icon-item">
-                        <a href="tg://resolve?domain=gobol_plus" class="icon-circle telegram" target="_system">
+                        <div class="icon-circle telegram" onclick="openSocialApp('telegram')">
                             <i class="fab fa-telegram"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">تليجرام</div>
                     </div>
                     <div class="icon-item">
-                        <a href="mailto:gobol_plus@gmail.com" class="icon-circle2 gmail" target="_system">
+                        <div class="icon-circle2 gmail" onclick="openSocialApp('gmail')">
                             <i class="fas fa-envelope"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">Gmail</div>
                     </div>
                     <div class="icon-item">
-                        <a href="https://api.whatsapp.com/send/?phone=0111808090&text=%D9%82%D8%A8%D9%88%D9%84%20%D8%A8%D9%84%D8%B3&type=phone_number&app_absent=0" class="icon-circle whatsapp" target="_system">
+                        <div class="icon-circle whatsapp" onclick="openSocialApp('whatsapp')">
                             <i class="fab fa-whatsapp"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">واتساب</div>
                     </div>
                 </div>
@@ -544,21 +544,21 @@
                 
                 <div class="icons-grid">
                     <div class="icon-item">
-                        <a href="https://facebook.com/100090213376426/" class="icon-circle facebook" target="_system">
+                        <div class="icon-circle facebook" onclick="openSocialApp('facebook')">
                             <i class="fab fa-facebook-f"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">فيسبوك</div>
                     </div>
                     <div class="icon-item">
-                        <a href="https://www.youtube.com/@Mustafa_TechWay" class="icon-circle youtube" target="_system">
+                        <div class="icon-circle youtube" onclick="openSocialApp('youtube')">
                             <i class="fab fa-youtube"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">يوتيوب</div>
                     </div>
                     <div class="icon-item">
-                        <a href="https://www.tiktok.com/@gobol_plus" class="icon-circle tiktok" target="_system">
+                        <div class="icon-circle tiktok" onclick="openSocialApp('tiktok')">
                             <i class="fab fa-tiktok"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">تيك توك</div>
                     </div>
                 </div>
@@ -617,6 +617,62 @@
                 popupOverlay2.style.display = 'none';
             }
         });
+
+        // دالة محسنة لفتح تطبيقات التواصل الاجتماعي - الحل النهائي
+        function openSocialApp(appName) {
+            let appUrl, webUrl;
+            
+            // تحديد الروابط حسب التطبيق
+            switch(appName) {
+                case 'telegram':
+                    appUrl = 'tg://resolve?domain=gobol_plus';
+                    webUrl = 'https://t.me/gobol_plus';
+                    break;
+                case 'whatsapp':
+                    appUrl = 'whatsapp://send?phone=0111808090&text=قبول بلس';
+                    webUrl = 'https://api.whatsapp.com/send/?phone=0111808090&text=%D9%82%D8%A8%D9%88%D9%84%20%D8%A8%D9%84%D8%B3&type=phone_number&app_absent=0';
+                    break;
+                case 'gmail':
+                    appUrl = 'mailto:gobol_plus@gmail.com';
+                    webUrl = 'mailto:gobol_plus@gmail.com';
+                    break;
+                case 'facebook':
+                    appUrl = 'fb://page/100090213376426';
+                    webUrl = 'https://facebook.com/100090213376426/';
+                    break;
+                case 'youtube':
+                    appUrl = 'vnd.youtube://channel/UCMustafa_TechWay';
+                    webUrl = 'https://www.youtube.com/@Mustafa_TechWay';
+                    break;
+                case 'tiktok':
+                    appUrl = 'tiktok://user/@gobol_plus';
+                    webUrl = 'https://www.tiktok.com/@gobol_plus';
+                    break;
+                default:
+                    return;
+            }
+
+            if (window.cordova) {
+                // محاولة فتح التطبيق مباشرة
+                var appWindow = window.open(appUrl, '_system');
+                
+                // إذا فشل فتح التطبيق، افتح الرابط في المتصفح بعد تأخير
+                setTimeout(function() {
+                    // نتحقق إذا كان المتصفح لا يزال مفتوحاً (مما يعني فشل فتح التطبيق)
+                    if (appWindow) {
+                        try {
+                            appWindow.close();
+                        } catch(e) {}
+                    }
+                    // فتح الرابط في المتصفح الخارجي
+                    window.open(webUrl, '_system');
+                }, 1000);
+                
+            } else {
+                // في المتصفح العادي، افتح الرابط مباشرة
+                window.open(webUrl, '_blank');
+            }
+        }
 
         // دالة محسنة لفتح الصفحات مع تحسين التناسب مع الشاشة
         function openPage(url, button) {
@@ -772,22 +828,13 @@
                 });
             });
 
-            // إزالة أي منع للروابط - هذا هو الحل الرئيسي
-            document.addEventListener('click', function(e) {
-                if (e.target.tagName === 'A' && e.target.href) {
-                    // السماح لجميع الروابط بالعمل بشكل طبيعي
-                    // لا نقوم بأي منع أو إعادة توجيه
-                    console.log('فتح الرابط:', e.target.href);
-                }
-            });
+            // إزالة أي منع للروابط نهائياً
+            console.log('تم إزالة جميع عمليات المنع للروابط');
         });
 
-        // تهيئة Cordova - إزالة المنع القديم
+        // تهيئة Cordova - بدون أي منع للروابط
         document.addEventListener('deviceready', function() {
-            console.log('Cordova is ready');
-            
-            // إزالة الكود القديم الذي كان يمنع فتح الروابط
-            // لا نضيف أي event listener يمنع السلوك الافتراضي للروابط
+            console.log('Cordova is ready - Social apps should open in external apps');
         }, false);
     </script>
 </body>
