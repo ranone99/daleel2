@@ -619,60 +619,155 @@
         });
 
         // دالة محسنة لفتح تطبيقات التواصل الاجتماعي - الحل النهائي
-        function openSocialApp(appName) {
-            let appUrl, webUrl;
-            
-            // تحديد الروابط حسب التطبيق
-            switch(appName) {
-                case 'telegram':
-                    appUrl = 'tg://resolve?domain=gobol_plus';
-                    webUrl = 'https://t.me/gobol_plus';
-                    break;
-                case 'whatsapp':
-                    appUrl = 'whatsapp://send?phone=0111808090&text=قبول بلس';
-                    webUrl = 'https://api.whatsapp.com/send/?phone=0111808090&text=%D9%82%D8%A8%D9%88%D9%84%20%D8%A8%D9%84%D8%B3&type=phone_number&app_absent=0';
-                    break;
-                case 'gmail':
-                    appUrl = 'mailto:gobol_plus@gmail.com';
-                    webUrl = 'mailto:gobol_plus@gmail.com';
-                    break;
-                case 'facebook':
-                    appUrl = 'fb://page/100090213376426';
-                    webUrl = 'https://facebook.com/100090213376426/';
-                    break;
-                case 'youtube':
-                    appUrl = 'vnd.youtube://channel/UCMustafa_TechWay';
-                    webUrl = 'https://www.youtube.com/@Mustafa_TechWay';
-                    break;
-                case 'tiktok':
-                    appUrl = 'tiktok://user/@gobol_plus';
-                    webUrl = 'https://www.tiktok.com/@gobol_plus';
-                    break;
-                default:
-                    return;
+   
+/*
+  دالة openSocialApp المحسّنة:
+  - تحاول فتح التطبيق مباشرة (Intent على أندرويد).
+  - لو فشل خلال مهلة قصيرة، تفتح الـ webUrl في المتصفح الخارجي (_system).
+  - تعمل مع iOS باستخدام window.open(appUrl, '_system') لأن Intents مش متاحة.
+*/
+
+document.addEventListener('deviceready', onDeviceReady, false);
+
+function onDeviceReady() {
+    console.log('Cordova ready — webintent & inappbrowser should be available if installed.');
+    // إذا حابب: نضمن أن window.open يستخدم InAppBrowser في Cordova
+    if (cordova && cordova.InAppBrowser) {
+        window.open = cordova.InAppBrowser.open;
+    }
+}
+
+// خريطة التطبيقات: appUrl (deep link / scheme), webUrl (fallback)
+const SOCIAL_MAP = {
+    telegram: {
+        appUrl: 'tg://resolve?domain=gobol_plus',
+        webUrl: 'https://t.me/gobol_plus',
+        packageName: 'org.telegram.messenger' // optional for Android intent
+    },
+    whatsapp: {
+        appUrl: 'whatsapp://send?phone=0111808090&text=قبول%20بلس',
+        webUrl: 'https://api.whatsapp.com/send/?phone=0111808090',
+        packageName: 'com.whatsapp'
+    },
+    gmail: {
+        appUrl: 'mailto:gobol_plus@gmail.com',
+        webUrl: 'mailto:gobol_plus@gmail.com'
+        // mail apps generally handled by URL scheme
+    },
+    facebook: {
+        // fb://page/<id> قد يفتح التطبيق. على بعض الأجهزة يحتاج format مختلف.
+        appUrl: 'fb://page/100090213376426',
+        webUrl: 'https://facebook.com/100090213376426',
+        packageName: 'com.facebook.katana'
+    },
+    youtube: {
+        appUrl: 'vnd.youtube://channel/UCMustafa_TechWay',
+        webUrl: 'https://www.youtube.com/@Mustafa_TechWay',
+        packageName: 'com.google.android.youtube'
+    },
+    tiktok: {
+        appUrl: 'tiktok://user/@gobol_plus',
+        webUrl: 'https://www.tiktok.com/@gobol_plus',
+        packageName: 'com.zhiliaoapp.musically'
+    }
+};
+
+/*
+  الدالة الأساسية:
+  appKey: المفتاح في SOCIAL_MAP مثل 'telegram' أو 'whatsapp'
+  options:
+    - timeout (ms) قبل فتح الفallback
+*/
+function openSocialApp(appKey, options = {}) {
+    const cfg = SOCIAL_MAP[appKey];
+    if (!cfg) {
+        console.warn('Unknown app key:', appKey);
+        return;
+    }
+
+    const timeout = options.timeout || 900; // ملحوظة: 800-1000ms كويس كافٍ
+    const appUrl = cfg.appUrl;
+    const webUrl = cfg.webUrl;
+    const packageName = cfg.packageName;
+
+    // Helper: فتح الرابط في المتصفح الخارجي (fallback)
+    function openFallback() {
+        try {
+            // استخدم _system ليفتح المتصفح أو التطبيقات المرتبطة
+            window.open(webUrl, '_system');
+        } catch (e) {
+            // كخط أخير افتح في نافذة جديدة بالمجوّف (browser)
+            window.open(webUrl, '_blank');
+        }
+    }
+
+    // لو إحنا داخل Cordova ونظام أندرويد ونوجد webintent
+    if (window.cordova && window.plugins && window.plugins.webintent && device && device.platform === 'Android') {
+        // نحاول تشغيل Intent ACTION_VIEW مباشرة على الـ appUrl
+        try {
+            // إنشاء intent عام
+            const successIntent = function() {
+                // لو نجحت فتح التطبيق، ما نعملش حاجة إضافية
+                console.log('Intent started successfully for', appKey);
+            };
+            const failIntent = function(err) {
+                console.warn('Intent failed or app not installed, fallback to web. err:', err);
+                openFallback();
+            };
+
+            // بعض التطبيقات تحتاج data وpackage، بعض الأحيان نستخدم ACTION_VIEW مع data=appUrl
+            const intentParams = {
+                action: window.plugins.webintent.ACTION_VIEW,
+                url: appUrl
+            };
+
+            // لو عرفنا package name نضيفه (يساعد في استهداف التطبيق مباشرة)
+            if (packageName) {
+                intentParams.packageName = packageName;
             }
 
-            if (window.cordova) {
-                // محاولة فتح التطبيق مباشرة
-                var appWindow = window.open(appUrl, '_system');
-                
-                // إذا فشل فتح التطبيق، افتح الرابط في المتصفح بعد تأخير
-                setTimeout(function() {
-                    // نتحقق إذا كان المتصفح لا يزال مفتوحاً (مما يعني فشل فتح التطبيق)
-                    if (appWindow) {
-                        try {
-                            appWindow.close();
-                        } catch(e) {}
-                    }
-                    // فتح الرابط في المتصفح الخارجي
-                    window.open(webUrl, '_system');
-                }, 1000);
-                
-            } else {
-                // في المتصفح العادي، افتح الرابط مباشرة
-                window.open(webUrl, '_blank');
-            }
+            // محاولة مباشرة باستخدام webintent.startActivity
+            window.plugins.webintent.startActivity(intentParams, successIntent, function(err){
+                // لو فشل—مثلاً التطبيق غير مثبت—نفتح الويب
+                console.warn('startActivity error:', err);
+                openFallback();
+            });
+
+            // كشبكة أمان: لو startActivity لا يستدعي callback فورا، فتح fallback بعد timeout
+            setTimeout(function(){
+                // لا نعمل fallback إذا التطبيق فتح بنجاح (لا يوجد طريقة مضمونة للتحقق هنا),
+                // ولكن عادة startActivity يستدعي successIntent إن نجحت.
+                // لذلك هذا timeout مجرد شبكة أمان صغيرة قد لا يكون مطلوباً.
+            }, timeout + 200);
+
+        } catch (e) {
+            console.error('Error using WebIntent:', e);
+            openFallback();
         }
+
+    } else {
+        // iOS أو متصفح أو Cordova بدون webintent -> استخدم window.open مع _system
+        try {
+            // جرب تفتح الـ appUrl في النظام (على iOS هذا سيحاول فتح التطبيق)
+            window.open(appUrl, '_system');
+
+            // بعد مهلة قصيرة، لو ما حصلش فتح (يعني التطبيق مش موجود)، نفتح الويب
+            setTimeout(function() {
+                openFallback();
+            }, timeout);
+        } catch (e) {
+            console.warn('Error opening appUrl directly, fallback to web', e);
+            openFallback();
+        }
+    }
+}
+
+// أمثلة استدعاء:
+// openSocialApp('telegram');
+// openSocialApp('whatsapp');
+// openSocialApp('youtube');
+
+
 
         // دالة محسنة لفتح الصفحات مع تحسين التناسب مع الشاشة
         function openPage(url, button) {
