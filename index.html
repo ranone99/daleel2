@@ -198,6 +198,8 @@
             max-width: 500px;
             text-align: center;
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .popup-content h2 {
@@ -243,13 +245,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1001;
         }
 
         .close-btn:hover {
             color: #333;
         }
 
-        /* شبكة أيقونات التواصل الاجتماعي - تم التصحيح */
+        /* شبكة أيقونات التواصل الاجتماعي */
         .icons-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
@@ -277,6 +280,7 @@
             text-decoration: none;
             transition: all 0.3s ease;
             margin-bottom: 8px;
+            cursor: pointer;
         }
 
         .icon-circle:hover, .icon-circle2:hover {
@@ -385,6 +389,33 @@
                 height: 50px;
                 font-size: 20px;
             }
+            
+            .popup-content {
+                padding: 20px 15px;
+                margin: 20px;
+            }
+        }
+
+        /* زر تواصل معنا في الأسفل */
+        .contact-btn {
+            margin-top: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
     </style>
     
@@ -425,7 +456,7 @@
                 </span>
             </button>
         </div>
- <div class="buttons-grid">
+
         <!-- زر لفتح الصندوق المنبثق -->
         <button id="openPopup" class="btn"> 
             <span class="loading-spinner"></span>
@@ -471,10 +502,10 @@
                     </button>
                 </div>
             </div>
-        </div></div>
+        </div>
 
         <!-- زر تواصل معنا -->
-        <button id="openPopup2" class="btn" style="margin-top: 20px;">
+        <button id="openPopup2" class="contact-btn">
             <span class="btn-text">
                 <i class="fas fa-headset"></i>
                 تواصل معنا
@@ -490,21 +521,21 @@
                 <!-- الشبكة الرئيسية للأيقونات الدائرية -->
                 <div class="icons-grid">
                     <div class="icon-item">
-                        <a href="tg://resolve?domain=gobol_plus" class="icon-circle telegram" onclick="handleSocialLink(event, 'tg://resolve?domain=gobol_plus')">
+                        <div class="icon-circle telegram" onclick="openSocialApp('tg://resolve?domain=gobol_plus', 'https://t.me/gobol_plus')">
                             <i class="fab fa-telegram"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">تليجرام</div>
                     </div>
                     <div class="icon-item">
-                        <a href="mailto:gobol_plus@gmail.com" class="icon-circle2 gmail" onclick="handleSocialLink(event, 'mailto:gobol_plus@gmail.com')">
+                        <div class="icon-circle2 gmail" onclick="openSocialApp('mailto:gobol_plus@gmail.com', 'mailto:gobol_plus@gmail.com')">
                             <i class="fas fa-envelope"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">Gmail</div>
                     </div>
                     <div class="icon-item">
-                        <a href="https://api.whatsapp.com/send/?phone=0111808090&text=%D9%82%D8%A8%D9%88%D9%84%20%D8%A8%D9%84%D8%B3&type=phone_number&app_absent=0" class="icon-circle whatsapp" onclick="handleSocialLink(event, 'https://api.whatsapp.com/send/?phone=0111808090&text=%D9%82%D8%A8%D9%88%D9%84%20%D8%A8%D9%84%D8%B3&type=phone_number&app_absent=0')">
+                        <div class="icon-circle whatsapp" onclick="openSocialApp('whatsapp://send?phone=0111808090', 'https://api.whatsapp.com/send/?phone=0111808090&text=%D9%82%D8%A8%D9%88%D9%84%20%D8%A8%D9%84%D8%B3&type=phone_number&app_absent=0')">
                             <i class="fab fa-whatsapp"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">واتساب</div>
                     </div>
                 </div>
@@ -513,21 +544,21 @@
                 
                 <div class="icons-grid">
                     <div class="icon-item">
-                        <a href="https://facebook.com/100090213376426/" class="icon-circle facebook" onclick="handleSocialLink(event, 'https://facebook.com/100090213376426/')">
+                        <div class="icon-circle facebook" onclick="openSocialApp('fb://page/100090213376426', 'https://facebook.com/100090213376426/')">
                             <i class="fab fa-facebook-f"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">فيسبوك</div>
                     </div>
                     <div class="icon-item">
-                        <a href="https://www.youtube.com/@Mustafa_TechWay" class="icon-circle youtube" onclick="handleSocialLink(event, 'https://www.youtube.com/@Mustafa_TechWay')">
+                        <div class="icon-circle youtube" onclick="openSocialApp('vnd.youtube://channel/UCMustafa_TechWay', 'https://www.youtube.com/@Mustafa_TechWay')">
                             <i class="fab fa-youtube"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">يوتيوب</div>
                     </div>
                     <div class="icon-item">
-                        <a href="#" class="icon-circle tiktok" onclick="handleSocialLink(event, '#')">
+                        <div class="icon-circle tiktok" onclick="openSocialApp('tiktok://user/@username', 'https://www.tiktok.com/@gobol_plus')">
                             <i class="fab fa-tiktok"></i>
-                        </a>
+                        </div>
                         <div class="icon-label">تيك توك</div>
                     </div>
                 </div>
@@ -587,25 +618,27 @@
             }
         });
 
-        // دالة معالجة روابط التواصل الاجتماعي - تم التصحيح
-        function handleSocialLink(event, url) {
-            event.preventDefault();
-            
+        // دالة محسنة لفتح تطبيقات التواصل الاجتماعي
+        function openSocialApp(appUrl, webUrl) {
             if (window.cordova) {
-                // في تطبيق Cordova، استخدم InAppBrowser لفتح الروابط
-                if (cordova.InAppBrowser) {
-                    cordova.InAppBrowser.open(url, '_system');
-                } else {
-                    window.open(url, '_system');
-                }
+                // محاولة فتح التطبيق المخصص
+                window.open(appUrl, '_system', 'location=yes');
+                
+                // إذا فشل فتح التطبيق، افتح الرابط في المتصفح بعد تأخير
+                setTimeout(function() {
+                    if (cordova.InAppBrowser) {
+                        cordova.InAppBrowser.open(webUrl, '_system');
+                    } else {
+                        window.open(webUrl, '_system');
+                    }
+                }, 500);
             } else {
-                // في المتصفح العادي، افتح الرابط في نافذة جديدة
-                window.open(url, '_blank');
+                // في المتصفح العادي
+                window.open(webUrl, '_blank');
             }
-            return false;
         }
 
-        // دالة عامة لفتح الصفحات
+        // دالة محسنة لفتح الصفحات مع تحسين التناسب مع الشاشة
         function openPage(url, button) {
             showLoading();
             
@@ -615,19 +648,72 @@
             
             setTimeout(function() {
                 if (window.cordova && cordova.InAppBrowser) {
+                    // إعدادات محسنة لتناسب الصفحة مع الشاشة
                     var options = [
-                        'location=yes',
+                        'location=no',
+                        'hidden=no',
+                        'clearcache=yes',
+                        'clearsessioncache=yes',
+                        'zoom=no',
                         'hardwareback=yes',
+                        'mediaPlaybackRequiresUserAction=no',
+                        'shouldPauseOnSuspend=no',
                         'closebuttoncaption=إغلاق',
+                        'disallowoverscroll=no',
+                        'toolbar=yes',
+                        'enableViewportScale=yes',
+                        'allowInlineMediaPlayback=yes',
+                        'keyboardDisplayRequiresUserAction=no',
+                        'suppressesIncrementalRendering=no',
+                        'presentationstyle=fullscreen',
+                        'transitionstyle=coververtical',
+                        'toolbarposition=top',
                         'toolbarcolor=#667eea',
                         'navigationbuttoncolor=#ffffff',
                         'closebuttoncolor=#ffffff',
-                        'enableViewportScale=yes',
-                        'mediaPlaybackRequiresUserAction=no',
-                        'allowInlineMediaPlayback=no'
+                        'fullscreen=yes'
                     ].join(',');
                     
                     var browser = cordova.InAppBrowser.open(url, '_blank', options);
+                    
+                    // حقن CSS لتحسين تناسب الصفحة مع الشاشة
+                    browser.addEventListener('loadstop', function(event) {
+                        // حقن CSS لتحسين الاستجابة
+                        var cssCode = `
+                            * {
+                                max-width: 100% !important;
+                                box-sizing: border-box !important;
+                            }
+                            body {
+                                padding: 10px !important;
+                                margin: 0 !important;
+                                overflow-x: hidden !important;
+                                -webkit-text-size-adjust: 100% !important;
+                            }
+                            table, img, iframe {
+                                max-width: 100% !important;
+                                height: auto !important;
+                            }
+                            .container, .main, .content {
+                                width: 100% !important;
+                                max-width: 100% !important;
+                                padding: 10px !important;
+                            }
+                            @media (max-width: 768px) {
+                                body {
+                                    font-size: 14px !important;
+                                }
+                            }
+                        `;
+                        
+                        browser.executeScript({
+                            code: `
+                                var style = document.createElement('style');
+                                style.innerHTML = \`${cssCode}\`;
+                                document.head.appendChild(style);
+                            `
+                        });
+                    });
                     
                     browser.addEventListener('loaderror', function(event) {
                         console.error('خطأ في التحميل: ' + event.message);
@@ -647,7 +733,10 @@
                     
                 } else {
                     // في المتصفح العادي
-                    window.open(url, '_blank');
+                    var newWindow = window.open(url, '_blank');
+                    if (newWindow) {
+                        newWindow.focus();
+                    }
                     hideLoading();
                     if (button) {
                         button.classList.remove('loading');
