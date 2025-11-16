@@ -8,14 +8,14 @@
 
         /* التصميم الدائري للأيقونات */
         .icon-circle {
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 250px;
+            font-size: 25px;
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
@@ -24,8 +24,8 @@
             margin: 0 auto;
         }
 .icon-circle2 {
-            width: 60px;
-            height: 60px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -140,6 +140,7 @@
             color: #007bff;
             transform: translateY(-2px);
         }
+
 
 
 
