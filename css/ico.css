@@ -15,7 +15,7 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 30px;
+            font-size: 40px;
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
@@ -24,14 +24,14 @@
             margin: 0 auto;
         }
 .icon-circle2 {
-            width: 90px;
-            height: 90px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 32px;
+            font-size: 40px;
             text-decoration: none;
             transition: all 0.3s ease;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
@@ -140,4 +140,5 @@
             color: #007bff;
             transform: translateY(-2px);
         }
+
 
